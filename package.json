@@ -25,6 +25,7 @@
     "@tsconfig/svelte": "^2.0.0"
   },
   "dependencies": {
+    "interactjs": "^1.10.11",
     "sirv-cli": "^1.0.0"
   }
 }
