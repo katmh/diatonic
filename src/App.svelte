@@ -14,5 +14,6 @@
 		max-width: 1000px;
 		margin: 2rem auto;
 		display: flex;
+		justify-content: center;
 	}
 </style>

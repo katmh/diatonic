@@ -6,6 +6,14 @@
     export let items: string[];
 
     const interactable = interact(`#${rulerType}`);
+
+    const gridTarget = interact.snappers.grid({
+        x: 1,
+        y: 40,
+        range: 100,
+        offset: { x: 0, y: 8 },
+    });
+
     interactable.draggable({
         lockAxis: "y",
         listeners: {
@@ -20,11 +28,11 @@
                 e.target.style.transform = `translate(${$positions[rulerType].x}px, ${$positions[rulerType].y}px)`;
             },
         },
-        /*modifiers: [
+        modifiers: [
             interact.modifiers.snap({
-                targets: [(x, y) => ({ y: y + 100 })],
+                targets: [gridTarget],
             }),
-        ],*/
+        ],
     });
 </script>
 
