@@ -9,10 +9,10 @@
 
     const gridTarget = interact.snappers.grid({
         x: 1,
-        y: 40,
+        y: 37,
         range: 100,
-        offset: { x: 0, y: 8 },
     });
+    console.log(gridTarget);
 
     interactable.draggable({
         lockAxis: "y",
@@ -52,7 +52,6 @@
         text-align: center;
         border: 1px solid #aaa;
         width: min-content;
-        padding: 0.5rem 0;
     }
 
     .item {
