@@ -5,10 +5,8 @@
     export let rulerType: string;
     export let items: string[];
 
-    const interactable = interact(".ruler");
+    const interactable = interact(`#${rulerType}`);
     interactable.draggable({
-        // make the element fire drag events
-        origin: "self", // (0, 0) will be the element's top-left
         lockAxis: "y",
         listeners: {
             move(e) {
@@ -30,7 +28,7 @@
     });
 </script>
 
-<div class="ruler">
+<div class="ruler" id={rulerType}>
     {#each items as item}
         <div class="item">
             <span class="label">{item}</span>
