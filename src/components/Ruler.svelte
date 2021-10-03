@@ -11,7 +11,6 @@
         x: 1,
         y: 37,
     });
-    console.log(gridTarget);
 
     interactable.draggable({
         lockAxis: "y",
@@ -29,6 +28,8 @@
         },
         modifiers: [
             interact.modifiers.snap({
+                offset: "parent",
+                relativePoints: [{ x: 0, y: 0 }],
                 targets: [gridTarget],
             }),
         ],
