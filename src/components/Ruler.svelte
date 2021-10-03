@@ -1,12 +1,30 @@
 <script lang="ts">
-    import { positions } from "../stores.js";
+    import { positions, visibleItems } from "../stores.js";
+    import allItems from "../data/items.js";
     import interact from "interactjs";
+    import { onMount } from "svelte";
 
     export let rulerType: string;
-    export let items: string[];
+
+    const itemHeight = 37;
+
+    onMount(async () => {
+        let remainingHeight = window.innerHeight;
+        while (remainingHeight > 0) {
+            visibleItems.update((visibleItems) => ({
+                ...visibleItems,
+                [rulerType]: visibleItems[rulerType].concat([
+                    allItems[rulerType][
+                        visibleItems[rulerType].length %
+                            allItems[rulerType].length
+                    ],
+                ]),
+            }));
+            remainingHeight -= itemHeight;
+        }
+    });
 
     const interactable = interact(`#${rulerType}`);
-    const itemHeight = 37;
     const gridTarget = interact.snappers.grid({
         x: 1,
         y: itemHeight,
@@ -48,11 +66,13 @@
 </script>
 
 <div class="ruler_container">
-    <button on:click={shift} data-ruler-id={rulerType}>up</button>
+    <button id="top_button" on:click={shift} data-ruler-id={rulerType}
+        >up</button
+    >
     <div class="ruler_parent">
         <!-- direct parent to use as snap grid offset -->
         <div class="ruler" id={rulerType}>
-            {#each items as item}
+            {#each $visibleItems[rulerType] as item}
                 <div class="item">
                     <span class="label">{item}</span>
                     <hr class="mark" />
@@ -60,12 +80,22 @@
             {/each}
         </div>
     </div>
-    <button on:click={(e) => shift(e, true)} data-ruler-id={rulerType}
-        >down</button
+    <button
+        id="bottom_button"
+        on:click={(e) => shift(e, true)}
+        data-ruler-id={rulerType}>down</button
     >
 </div>
 
 <style>
+    button {
+        position: absolute;
+    }
+
+    #bottom_button {
+        bottom: 0;
+    }
+
     .ruler_container {
         height: 100%;
         display: flex;

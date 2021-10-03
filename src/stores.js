@@ -5,3 +5,8 @@ export const positions = writable({
     number: { x: 0, y: 0 },
     window: { x: 0, y: 0 },
 });
+
+export const visibleItems = writable({
+    pitch: [],
+    number: [],
+})
