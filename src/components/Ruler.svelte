@@ -10,7 +10,6 @@
     const gridTarget = interact.snappers.grid({
         x: 1,
         y: 37,
-        range: 100,
     });
     console.log(gridTarget);
 
