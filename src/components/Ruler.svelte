@@ -6,24 +6,28 @@
     export let items: string[];
 
     const interactable = interact(`#${rulerType}`);
-
+    const itemHeight = 37;
     const gridTarget = interact.snappers.grid({
         x: 1,
-        y: 37,
+        y: itemHeight,
     });
+
+    const moveRuler = (dx, dy, rulerElement) => {
+        positions.update((positions) => ({
+            ...positions,
+            [rulerType]: {
+                x: positions[rulerType].x + dx,
+                y: positions[rulerType].y + dy,
+            },
+        }));
+        rulerElement.style.transform = `translate(${$positions[rulerType].x}px, ${$positions[rulerType].y}px)`;
+    };
 
     interactable.draggable({
         lockAxis: "y",
         listeners: {
             move(e) {
-                positions.update((positions) => ({
-                    ...positions,
-                    [rulerType]: {
-                        x: positions[rulerType].x + e.dx,
-                        y: positions[rulerType].y + e.dy,
-                    },
-                }));
-                e.target.style.transform = `translate(${$positions[rulerType].x}px, ${$positions[rulerType].y}px)`;
+                moveRuler(e.dx, e.dy, e.target);
             },
         },
         modifiers: [
@@ -34,18 +38,45 @@
             }),
         ],
     });
+
+    const shift = (e, down = false) =>
+        moveRuler(
+            0,
+            down ? itemHeight : -itemHeight,
+            document.getElementById(e.target.dataset.rulerId)
+        );
 </script>
 
-<div class="ruler" id={rulerType}>
-    {#each items as item}
-        <div class="item">
-            <span class="label">{item}</span>
-            <hr class="mark" />
+<div class="ruler_container">
+    <button on:click={shift} data-ruler-id={rulerType}>up</button>
+    <div class="ruler_parent">
+        <!-- direct parent to use as snap grid offset -->
+        <div class="ruler" id={rulerType}>
+            {#each items as item}
+                <div class="item">
+                    <span class="label">{item}</span>
+                    <hr class="mark" />
+                </div>
+            {/each}
         </div>
-    {/each}
+    </div>
+    <button on:click={(e) => shift(e, true)} data-ruler-id={rulerType}
+        >down</button
+    >
 </div>
 
 <style>
+    .ruler_container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    button {
+        z-index: 1;
+    }
+
     .ruler {
         display: flex;
         flex-direction: column;

@@ -12,10 +12,12 @@
 
 <style>
 	.container {
+		height: 100vh;
 		width: 95%;
 		max-width: 1000px;
-		margin: 2rem auto;
+		margin: 0 auto;
 		display: flex;
 		justify-content: center;
+		overflow-y: hidden;
 	}
 </style>
