@@ -24,7 +24,8 @@ export const inWindow = derived(
     ($offsets) => {
         let items = [];
         rulers.forEach((ruler) => {
-            const item = rulerItems[ruler][$offsets.window - $offsets[ruler]];
+            const index = ($offsets.window - $offsets[ruler]) % rulerItems[ruler].length;
+            const item = rulerItems[ruler][index];
             items.push([ruler, item]);
         });
         return items;
