@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { positions, visibleItems } from "../stores.js";
+    import { positions, visibleItems, offsets } from "../stores.js";
     import allItems from "../data/items.js";
     import interact from "interactjs";
     import { onMount } from "svelte";
@@ -41,11 +41,25 @@
         rulerElement.style.transform = `translate(${$positions[rulerType].x}px, ${$positions[rulerType].y}px)`;
     };
 
+    let previousY = 0;
+    const updateOffset = () => {
+        if (previousY !== $positions[rulerType].y) {
+            const diff = $positions[rulerType].y - previousY;
+            const numItems = diff / itemHeight;
+            offsets.update((offsets) => ({
+                ...offsets,
+                [rulerType]: offsets[rulerType] + numItems,
+            }));
+            previousY = $positions[rulerType].y;
+        }
+    };
+
     interactable.draggable({
         lockAxis: "y",
         listeners: {
             move(e) {
                 moveRuler(e.dx, e.dy, e.target);
+                updateOffset();
             },
         },
         modifiers: [
