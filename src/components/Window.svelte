@@ -22,6 +22,8 @@
         },
         modifiers: [
             interact.modifiers.snap({
+                offset: "parent",
+                relativePoints: [{ x: 0, y: 0 }],
                 targets: [gridTarget],
             }),
         ],
