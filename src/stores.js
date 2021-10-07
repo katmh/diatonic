@@ -19,12 +19,13 @@ export const offsets = writable({
 });
 
 const rulers = ["pitch", "number"];
+const mod = (n, m) => ((n % m) + m) % m;
 export const inWindow = derived(
     offsets,
     ($offsets) => {
         let items = [];
         rulers.forEach((ruler) => {
-            const index = ($offsets.window - $offsets[ruler]) % rulerItems[ruler].length;
+            let index = mod($offsets.window - $offsets[ruler], rulerItems[ruler].length);
             const item = rulerItems[ruler][index];
             items.push([ruler, item]);
         });
