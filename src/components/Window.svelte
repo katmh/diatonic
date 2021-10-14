@@ -3,8 +3,7 @@
     import { positions, offsets } from "../stores.js";
     import { onMount } from "svelte";
     const interactable = interact(`#window`);
-
-    const itemHeight = 37; // TODO: put this in store or data file
+    import itemHeight from "../data/itemHeight.js";
 
     const gridTarget = interact.snappers.grid({
         x: 1,
@@ -58,12 +57,12 @@
     });
 </script>
 
-<div id="window" />
+<div id="window" style="--item-height: {itemHeight}px" />
 
 <style>
     #window {
         border: 1px solid red;
-        height: 37px;
+        height: var(--item-height);
         width: 300px;
         position: absolute;
         margin-left: -50px;
