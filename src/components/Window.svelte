@@ -1,6 +1,7 @@
 <script lang="ts">
     import interact from "interactjs";
     import { positions, offsets } from "../stores.js";
+    import { onMount } from "svelte";
     const interactable = interact(`#window`);
 
     const itemHeight = 37; // TODO: put this in store or data file
@@ -33,6 +34,11 @@
         }));
         windowElement.style.transform = `translate(${$positions.window.x}px, ${$positions.window.y}px)`;
     };
+
+    onMount(() => {
+        const windowElement = document.querySelector("#window");
+        moveWindow(0, window.innerHeight / 2, windowElement);
+    });
 
     interactable.draggable({
         lockAxis: "y",
