@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { positions, visibleItems, offsets } from "../stores.js";
+    import { visibleItems, rulers } from "../stores.js";
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import interact from "interactjs";
@@ -30,27 +30,17 @@
     });
 
     const moveRuler = (dx, dy, rulerElement) => {
-        positions.update((positions) => ({
-            ...positions,
-            [rulerType]: {
-                x: positions[rulerType].x + dx,
-                y: positions[rulerType].y + dy,
-            },
-        }));
-        rulerElement.style.transform = `translate(${$positions[rulerType].x}px, ${$positions[rulerType].y}px)`;
-    };
-
-    let previousY = 0;
-    const updateOffset = () => {
-        if (previousY !== $positions[rulerType].y) {
-            const diff = $positions[rulerType].y - previousY;
-            const numItems = diff / itemHeight;
-            offsets.update((offsets) => ({
-                ...offsets,
-                [rulerType]: offsets[rulerType] + numItems,
-            }));
-            previousY = $positions[rulerType].y;
-        }
+        const idx = $rulers.findIndex((obj) => obj.type === rulerType);
+        rulers.update((rulers) => {
+            const rulerToUpdate = rulers[idx];
+            const updatedRuler = {
+                type: rulerType,
+                position: rulerToUpdate.position + dy,
+            };
+            rulers[idx] = updatedRuler;
+            return rulers;
+        });
+        rulerElement.style.transform = `translate(0, ${$rulers[idx].position}px)`;
     };
 
     interactable.draggable({
@@ -58,7 +48,6 @@
         listeners: {
             move(e) {
                 moveRuler(e.dx, e.dy, e.target);
-                updateOffset();
             },
         },
         modifiers: [
@@ -70,6 +59,8 @@
         ],
     });
 
+    // event handler for up/down arrows
+    // TODO: update position in store
     const shift = (e, down = false) =>
         moveRuler(
             0,

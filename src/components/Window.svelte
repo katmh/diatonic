@@ -1,42 +1,31 @@
 <script lang="ts">
     import interact from "interactjs";
-    import { positions, offsets } from "../stores.js";
+    import { windowPosition, rulers } from "../stores.js";
     import { onMount } from "svelte";
     const interactable = interact(`#window`);
     import itemHeight from "../data/itemHeight.js";
+
+    const windowWidth = $rulers.length * 100 + 100; // TODO
 
     const gridTarget = interact.snappers.grid({
         x: 1,
         y: itemHeight,
     });
 
-    let previousY = 0;
-    const updateOffset = () => {
-        if (previousY !== $positions.window.y) {
-            const diff = $positions.window.y - previousY;
-            const numItems = diff / itemHeight;
-            offsets.update((offsets) => ({
-                ...offsets,
-                window: offsets.window + numItems,
-            }));
-            previousY = $positions.window.y;
-        }
-    };
-
-    const moveWindow = (dx, dy, windowElement) => {
-        positions.update((positions) => ({
-            ...positions,
-            window: {
-                x: positions.window.x + dx,
-                y: positions.window.y + dy,
-            },
-        }));
-        windowElement.style.transform = `translate(${$positions.window.x}px, ${$positions.window.y}px)`;
+    const moveWindow = (_, dy, windowElement) => {
+        windowPosition.update((position) => position + dy);
+        windowElement.style.transform = `translate(0px, ${$windowPosition}px)`;
     };
 
     onMount(() => {
+        // initialize window about halfway down the page
+        // initial position should be on itemHeight grid
         const windowElement = document.querySelector("#window");
-        moveWindow(0, window.innerHeight / 2, windowElement);
+        moveWindow(
+            0,
+            (Math.floor(window.innerHeight / itemHeight) / 2) * itemHeight,
+            windowElement
+        );
     });
 
     interactable.draggable({
@@ -44,7 +33,6 @@
         listeners: {
             move(e) {
                 moveWindow(e.dx, e.dy, e.target);
-                updateOffset();
             },
         },
         modifiers: [
@@ -57,13 +45,16 @@
     });
 </script>
 
-<div id="window" style="--item-height: {itemHeight}px" />
+<div
+    id="window"
+    style="--item-height: {itemHeight}px; --window-width: {windowWidth}px;"
+/>
 
 <style>
     #window {
         border: 1px solid red;
         height: var(--item-height);
-        width: 300px;
+        width: var(--window-width);
         position: absolute;
         margin-left: -50px;
     }
