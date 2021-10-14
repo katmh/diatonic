@@ -131,6 +131,8 @@
     .item {
         position: relative;
         padding: 8px 20px;
+        display: flex;
+        justify-content: center;
     }
 
     .label {
@@ -140,6 +142,7 @@
         background: #fff;
         padding: 0 0.25rem;
         font: normal 20px/1 system-ui;
+        width: max-content;
     }
 
     .mark {
