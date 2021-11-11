@@ -7,7 +7,7 @@ const generateID = () => {
         ID = generateCode(4);
     }
     IDs.add(ID);
-    return ID;
+    return ID.toString();
 }
 
 const generateCode = (len) => {

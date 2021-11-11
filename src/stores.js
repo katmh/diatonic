@@ -3,24 +3,23 @@ import rulerItems from "./data/items.js";
 import itemHeight from "./data/itemHeight.js";
 import generateID from "./utils/ID.js";
 
-// TODO: ruler unique IDs so we can have e.g. multiple "number"-type rulers
-export const rulers = writable([
-    {
-        id: generateID(),
+export const rulers = writable({
+    [generateID()]: {
         type: "pitch",
         position: 0,
+        items: []
     },
-    {
-        id: generateID(),
+    [generateID()]: {
         type: "number",
         position: 0,
+        items: []
     },
-    {
-        id: generateID(),
+    [generateID()]: {
         type: "interval",
         position: 0,
+        items: []
     }
-]);
+})
 
 export const windowPosition = writable(0);
 const windowOffset = derived(windowPosition, ($windowPosition) => ($windowPosition / itemHeight));
@@ -28,7 +27,9 @@ const windowOffset = derived(windowPosition, ($windowPosition) => ($windowPositi
 const mod = (n, m) => ((n % m) + m) % m;
 export const rulerInfo = derived([rulers, windowOffset], ([$rulers, $windowOffset]) => {
     let info = {};
-    $rulers.forEach((ruler) => {
+    /*
+    for (ruler in $rulers) {
+        console.log(ruler);
         const items = rulerItems[ruler.type];
         const rulerLength = items.length;
         const rulerOffset = ruler.position / itemHeight;
@@ -38,14 +39,6 @@ export const rulerInfo = derived([rulers, windowOffset], ([$rulers, $windowOffse
             offset: rulerOffset,
             inWindow: items[mod($windowOffset - rulerOffset, rulerLength)]
         }
-    })
+    }*/
     return info;
-})
-
-
-// for infinite ruler / managing what's on the page
-export const visibleItems = writable({
-    pitch: [],
-    number: [],
-    interval: [],
 })

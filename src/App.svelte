@@ -16,16 +16,19 @@
         );
         console.log($rulers, $rulerInfo);
     };
+    const keys = Object.keys($rulers);
+    const test = [1, 2, 3];
+    //<Ruler rulerType={$rulers[key].type} id={$rulers[key].id} />
+    //<Dashboard {handleSelectMode} {selectedMode} />
 </script>
 
 <div class="container">
     <div class="rulers">
         <Window />
-        {#each $rulers as ruler}
-            <Ruler rulerType={ruler.type} id={ruler.id} />
+        {#each keys as key}
+            <Ruler id={key} />
         {/each}
     </div>
-    <Dashboard {handleSelectMode} {selectedMode} />
 </div>
 
 <style>

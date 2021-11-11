@@ -1,47 +1,55 @@
 <script lang="ts">
-    import { visibleItems, rulers } from "../stores.js";
+    import { rulers } from "../stores.js";
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import interact from "interactjs";
     import { onMount } from "svelte";
 
-    export let rulerType: string;
     export let id: string;
 
-    const moveRuler = (_, dy, rulerElement) => {
-        const idx = $rulers.findIndex((obj) => obj.type === rulerType);
-        rulers.update((rulers) => {
-            const rulerToUpdate = rulers[idx];
-            const updatedRuler = {
-                id,
-                type: rulerType,
-                position: rulerToUpdate.position + dy,
-            };
-            rulers[idx] = updatedRuler;
-            return rulers;
-        });
-        rulerElement.style.transform = `translate(0, ${$rulers[idx].position}px)`;
+    const type = $rulers[id].type;
+
+    const moveRuler = (dy: number, rulerElement: HTMLElement) => {
+        // update `position` property of ruler in store
+        // TODO: and `items` (for infinite ruler)
+        rulers.update((rulers) => ({
+            ...rulers,
+            [id]: {
+                ...rulers[id],
+                position: rulers[id].position + dy,
+            },
+        }));
+        // move the ruler on the screen accordingly
+        rulerElement.style.transform = `translate(0, ${$rulers[id].position}px)`;
     };
 
+    // event handler for up/down arrows
+    // TODO: update position in store
+    const shift = (e, down = false) =>
+        moveRuler(
+            down ? itemHeight : -itemHeight,
+            document.getElementById(e.target.dataset.rulerId)
+        );
+
     onMount(async () => {
+        // make ruler take up full height of viewport
         let remainingHeight = window.innerHeight;
         while (remainingHeight > 0) {
-            visibleItems.update((visibleItems) => ({
-                ...visibleItems,
-                [rulerType]: visibleItems[rulerType].concat([
-                    allItems[rulerType][
-                        visibleItems[rulerType].length %
-                            allItems[rulerType].length
-                    ],
-                ]),
+            const currentItems = $rulers[id].items;
+            const nextItem =
+                allItems[type][currentItems.length % allItems[type].length];
+            const itemsPlusNextItem = currentItems.concat([nextItem]);
+            rulers.update((rulers) => ({
+                ...rulers,
+                [id]: {
+                    ...rulers[id],
+                    items: itemsPlusNextItem,
+                },
             }));
             remainingHeight -= itemHeight;
         }
 
-        console.log("new ruler mounted");
-
         const interactable = interact(`#${id}`);
-        console.log(interactable);
         const gridTarget = interact.snappers.grid({
             x: 1,
             y: itemHeight,
@@ -50,7 +58,7 @@
             lockAxis: "y",
             listeners: {
                 move(e) {
-                    moveRuler(e.dx, e.dy, e.target);
+                    moveRuler(e.dy, e.target);
                 },
             },
             modifiers: [
@@ -62,15 +70,6 @@
             ],
         });
     });
-
-    // event handler for up/down arrows
-    // TODO: update position in store
-    const shift = (e, down = false) =>
-        moveRuler(
-            0,
-            down ? itemHeight : -itemHeight,
-            document.getElementById(e.target.dataset.rulerId)
-        );
 </script>
 
 <div class="ruler_container no_select">
@@ -78,7 +77,7 @@
     <div class="ruler_parent">
         <!-- direct parent to use as snap grid offset -->
         <div class="ruler" {id}>
-            {#each $visibleItems[rulerType] as item}
+            {#each $rulers[id].items as item}
                 <div class="item">
                     <span class="label">{item}</span>
                     <hr class="mark" />
