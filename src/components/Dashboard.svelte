@@ -27,7 +27,16 @@
 </script>
 
 <div class="dashboard">
-    <label for="mode">select a mode:</label>
+    <h1>Music Modulator</h1>
+
+    <p>
+        To get started, select a preset, or explore by shifting the rulers up
+        and down.
+    </p>
+
+    <hr />
+
+    <label for="mode"><b>Preset:</b></label>
     <select
         name="mode"
         id="mode"
@@ -53,5 +62,11 @@
         width: 200px;
         padding-top: 1rem;
         font: 1rem/1.25 system-ui;
+        background: #efefef;
+    }
+
+    hr,
+    p {
+        margin: 1rem 0;
     }
 </style>

@@ -4,7 +4,8 @@
     box-sizing: border-box;
 }
 
-body {
+body,
+html {
     max-height: 100vh;
     overflow-y: hidden;
 }

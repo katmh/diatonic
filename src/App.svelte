@@ -8,13 +8,13 @@
 </script>
 
 <div class="container">
+    <Dashboard />
     <div class="rulers">
         <Window />
         {#each keys as key}
             <Ruler id={key} />
         {/each}
     </div>
-    <Dashboard />
 </div>
 
 <style>
