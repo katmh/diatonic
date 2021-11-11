@@ -2,7 +2,7 @@
     import Dashboard from "./components/Dashboard.svelte";
     import Ruler from "./components/Ruler.svelte";
     import Window from "./components/Window.svelte";
-    import { rulers, rulerInfo } from "./stores.js";
+    import { rulers } from "./stores.js";
     import generateID from "./utils/ID.js";
 
     let selectedMode;
@@ -14,12 +14,9 @@
                 position: 0,
             }))
         );
-        console.log($rulers, $rulerInfo);
     };
+
     const keys = Object.keys($rulers);
-    const test = [1, 2, 3];
-    //<Ruler rulerType={$rulers[key].type} id={$rulers[key].id} />
-    //<Dashboard {handleSelectMode} {selectedMode} />
 </script>
 
 <div class="container">
@@ -29,6 +26,7 @@
             <Ruler id={key} />
         {/each}
     </div>
+    <Dashboard {handleSelectMode} {selectedMode} />
 </div>
 
 <style>

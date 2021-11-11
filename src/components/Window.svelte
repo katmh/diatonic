@@ -1,38 +1,28 @@
 <script lang="ts">
     import interact from "interactjs";
-    import { windowPosition, rulers } from "../stores.js";
+    import { windowPosition, rulers, inWindow } from "../stores.js";
     import { onMount } from "svelte";
     const interactable = interact(`#window`);
     import itemHeight from "../data/itemHeight.js";
 
-    const windowWidth = $rulers.length * 100 + 100; // TODO
+    const windowWidth = Object.keys($rulers).length * 100 + 100; // TODO
+
+    const moveWindow = (dy, windowElement) => {
+        windowPosition.update((position) => position + dy / itemHeight);
+        windowElement.style.transform = `translate(0px, ${
+            $windowPosition * itemHeight
+        }px)`;
+    };
 
     const gridTarget = interact.snappers.grid({
         x: 1,
         y: itemHeight,
     });
-
-    const moveWindow = (_, dy, windowElement) => {
-        windowPosition.update((position) => position + dy);
-        windowElement.style.transform = `translate(0px, ${$windowPosition}px)`;
-    };
-
-    onMount(() => {
-        // initialize window about halfway down the page
-        // initial position should be on itemHeight grid
-        const windowElement = document.querySelector("#window");
-        moveWindow(
-            0,
-            (Math.floor(window.innerHeight / itemHeight) / 2) * itemHeight,
-            windowElement
-        );
-    });
-
     interactable.draggable({
         lockAxis: "y",
         listeners: {
             move(e) {
-                moveWindow(e.dx, e.dy, e.target);
+                moveWindow(e.dy, e.target);
             },
         },
         modifiers: [
@@ -42,6 +32,16 @@
                 targets: [gridTarget],
             }),
         ],
+    });
+
+    onMount(() => {
+        // initialize window about halfway down the page
+        // initial position should be on itemHeight grid
+        const windowElement = document.querySelector("#window");
+        moveWindow(
+            (Math.floor(window.innerHeight / itemHeight) / 2) * itemHeight,
+            windowElement
+        );
     });
 </script>
 

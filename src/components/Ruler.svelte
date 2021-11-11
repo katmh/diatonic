@@ -41,7 +41,7 @@
             ...rulers,
             [id]: {
                 ...rulers[id],
-                position: rulers[id].position + dy,
+                position: rulers[id].position + dy / itemHeight,
                 items: newItems ?? rulers[id].items, // don't replace if dy == 0
             },
         }));

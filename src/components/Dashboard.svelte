@@ -1,9 +1,11 @@
 <script lang="ts">
-    import { rulers, rulerInfo } from "../stores.js";
+    import { rulers, inWindow } from "../stores.js";
     import presets from "../data/presets.js";
 
     export let handleSelectMode: () => void;
     export let selectedMode: string;
+
+    const keys = Object.keys($inWindow);
 </script>
 
 <div class="dashboard">
@@ -23,8 +25,8 @@
     <br />
     <br />
 
-    {#each $rulers as ruler}
-        <p>{$rulerInfo[ruler.type].inWindow}</p>
+    {#each keys as key}
+        <p>{$rulers[key].type}: {$inWindow[key]}</p>
     {/each}
 </div>
 

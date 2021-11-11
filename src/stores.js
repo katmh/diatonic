@@ -1,5 +1,5 @@
 import { writable, derived } from 'svelte/store';
-import rulerItems from "./data/items.js";
+import allItems from "./data/items.js";
 import itemHeight from "./data/itemHeight.js";
 import generateID from "./utils/ID.js";
 
@@ -22,23 +22,14 @@ export const rulers = writable({
 })
 
 export const windowPosition = writable(0);
-const windowOffset = derived(windowPosition, ($windowPosition) => ($windowPosition / itemHeight));
 
 const mod = (n, m) => ((n % m) + m) % m;
-export const rulerInfo = derived([rulers, windowOffset], ([$rulers, $windowOffset]) => {
-    let info = {};
-    /*
-    for (ruler in $rulers) {
-        console.log(ruler);
-        const items = rulerItems[ruler.type];
-        const rulerLength = items.length;
-        const rulerOffset = ruler.position / itemHeight;
-
-        info[ruler.type] = {
-            position: ruler.position,
-            offset: rulerOffset,
-            inWindow: items[mod($windowOffset - rulerOffset, rulerLength)]
-        }
-    }*/
-    return info;
+export const inWindow = derived([rulers, windowPosition], ([rulers, windowPosition]) => {
+    let items = {};
+    for (const key in rulers) {
+        const ruler = rulers[key];
+        const itemInWindow = allItems[ruler.type][mod(windowPosition - ruler.position, allItems[ruler.type].length)];
+        items[key] = itemInWindow;
+    }
+    return items;
 })
