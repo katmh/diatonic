@@ -103,9 +103,11 @@
 </script>
 
 <div class="ruler_container no_select">
-    <button id="top_button" on:click={() => shift()} data-ruler-id={id}
-        >up</button
-    >
+    <div class="button_container" id="top_button_container">
+        <button on:click={() => shift()} data-ruler-id={id}>
+            <div class="triangle" id="top_triangle" />
+        </button>
+    </div>
     <div class="ruler_parent">
         <!-- direct parent to use as snap grid offset -->
         <div class="ruler" {id}>
@@ -117,31 +119,63 @@
             {/each}
         </div>
     </div>
-    <button id="bottom_button" on:click={() => shift(true)} data-ruler-id={id}
-        >down</button
-    >
+    <div class="button_container" id="bottom_button_container">
+        <button on:click={() => shift(true)} data-ruler-id={id}>
+            <div class="triangle" id="bottom_triangle" />
+        </button>
+    </div>
 </div>
 
 <style>
-    button {
+    .button_container {
         position: absolute;
         width: 100%;
         z-index: 1;
-        padding: 1rem 0;
+        padding: 0.25rem 0 1.5rem;
         border: none;
         background: linear-gradient(
             rgba(255, 255, 255, 1) 60%,
             rgba(255, 255, 255, 0)
         );
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
     }
-
-    #bottom_button {
+    #bottom_button_container {
         bottom: 0;
+        padding: 1.5rem 0 0.25rem;
         background: linear-gradient(
             to top,
             rgba(255, 255, 255, 1) 60%,
             rgba(255, 255, 255, 0)
         );
+    }
+
+    .triangle {
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        margin: -1px auto 0;
+    }
+    #top_triangle {
+        border-bottom: 12px solid #999;
+    }
+    #bottom_triangle {
+        border-top: 12px solid #999;
+        margin: 1px auto 0;
+    }
+
+    button {
+        width: 110px;
+        height: 25px;
+        background: #efefef;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    button:hover {
+        background: #dedede;
     }
 
     .ruler_container {
