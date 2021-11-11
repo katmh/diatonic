@@ -6,6 +6,7 @@
 
 body {
     max-height: 100vh;
+    overflow-y: hidden;
 }
 
 .no_select {

@@ -3,12 +3,17 @@
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import interact from "interactjs";
-    import { onMount } from "svelte";
+    import { beforeUpdate, afterUpdate } from "svelte";
     import getAt from "../utils/getAt.js";
 
     export let id: string;
-
     const type = $rulers[id].type;
+    $: items = $rulers[id].items;
+    let interactable;
+    const gridTarget = interact.snappers.grid({
+        x: 1,
+        y: itemHeight,
+    });
 
     const moveRuler = (dy: number) => {
         // infinite ruler:
@@ -50,7 +55,10 @@
     // event handler for up/down arrows
     const shift = (down = false) => moveRuler(down ? itemHeight : -itemHeight);
 
-    onMount(async () => {
+    beforeUpdate(async () => {
+        if ($rulers[id].items.length != 0) {
+            return;
+        }
         // make ruler take up full height of viewport
         let remainingHeight = window.innerHeight;
         while (remainingHeight > 0) {
@@ -67,12 +75,15 @@
             }));
             remainingHeight -= itemHeight;
         }
+        interactable = undefined;
+    });
 
-        const interactable = interact(`#${id}`);
-        const gridTarget = interact.snappers.grid({
-            x: 1,
-            y: itemHeight,
-        });
+    afterUpdate(async () => {
+        if (interactable) {
+            return;
+        }
+        items = $rulers[id].items; // force update
+        interactable = interact(`#${id}`);
         interactable.draggable({
             lockAxis: "y",
             listeners: {
@@ -98,7 +109,7 @@
     <div class="ruler_parent">
         <!-- direct parent to use as snap grid offset -->
         <div class="ruler" {id}>
-            {#each $rulers[id].items as item}
+            {#each items as item}
                 <div class="item">
                     <span class="label">{item}</span>
                     <hr class="mark" />

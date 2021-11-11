@@ -1,11 +1,29 @@
 <script lang="ts">
     import { rulers, inWindow } from "../stores.js";
     import presets from "../data/presets.js";
+    import generateID from "../utils/ID.js";
 
-    export let handleSelectMode: () => void;
-    export let selectedMode: string;
+    let selectedMode;
+    const handleSelectMode = async () => {
+        if (!selectedMode) {
+            rulers.update(() => ({}));
+            return;
+        }
+        rulers.update(() => {
+            let newRulers = {};
+            selectedMode.rulers.forEach(
+                (type: string) =>
+                    (newRulers[generateID()] = {
+                        type,
+                        position: 0,
+                        items: [],
+                    })
+            );
+            return newRulers;
+        });
+    };
 
-    const keys = Object.keys($inWindow);
+    $: keys = Object.keys($inWindow);
 </script>
 
 <div class="dashboard">
