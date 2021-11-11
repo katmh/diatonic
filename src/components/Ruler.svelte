@@ -4,6 +4,7 @@
     import itemHeight from "../data/itemHeight.js";
     import interact from "interactjs";
     import { onMount } from "svelte";
+    import getAt from "../utils/getAt.js";
 
     export let id: string;
 
@@ -16,15 +17,17 @@
         // +dy (move down) => add +1 items to top, add -1 items to bottom
         let newItems;
         if (dy < 0) {
-            const currentLastItem = $rulers[id].items.at(-1);
-            const nextItem = allItems[type].at(
+            const currentLastItem = getAt($rulers[id].items, -1);
+            const nextItem = getAt(
+                allItems[type],
                 (allItems[type].indexOf(currentLastItem) + 1) %
                     allItems[type].length
             );
             newItems = $rulers[id].items.slice(1).concat([nextItem]);
         } else if (dy > 0) {
             const currentFirstItem = $rulers[id].items[0];
-            const previousItem = allItems[type].at(
+            const previousItem = getAt(
+                allItems[type],
                 (allItems[type].indexOf(currentFirstItem) - 1) %
                     allItems[type].length
             );

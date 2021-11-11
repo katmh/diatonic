@@ -10,7 +10,7 @@ const generateID = () => {
     return ID.toString();
 }
 
-const generateCode = (len) => {
+const generateCode = (len: number) => {
     let code = [];
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
     for (let i = 0; i < len; i++) {
