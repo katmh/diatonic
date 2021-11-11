@@ -6,6 +6,22 @@
     import { onMount } from "svelte";
 
     export let rulerType: string;
+    export let id: string;
+
+    const moveRuler = (_, dy, rulerElement) => {
+        const idx = $rulers.findIndex((obj) => obj.type === rulerType);
+        rulers.update((rulers) => {
+            const rulerToUpdate = rulers[idx];
+            const updatedRuler = {
+                id,
+                type: rulerType,
+                position: rulerToUpdate.position + dy,
+            };
+            rulers[idx] = updatedRuler;
+            return rulers;
+        });
+        rulerElement.style.transform = `translate(0, ${$rulers[idx].position}px)`;
+    };
 
     onMount(async () => {
         let remainingHeight = window.innerHeight;
@@ -21,42 +37,30 @@
             }));
             remainingHeight -= itemHeight;
         }
-    });
 
-    const interactable = interact(`#${rulerType}`);
-    const gridTarget = interact.snappers.grid({
-        x: 1,
-        y: itemHeight,
-    });
+        console.log("new ruler mounted");
 
-    const moveRuler = (dx, dy, rulerElement) => {
-        const idx = $rulers.findIndex((obj) => obj.type === rulerType);
-        rulers.update((rulers) => {
-            const rulerToUpdate = rulers[idx];
-            const updatedRuler = {
-                type: rulerType,
-                position: rulerToUpdate.position + dy,
-            };
-            rulers[idx] = updatedRuler;
-            return rulers;
+        const interactable = interact(`#${id}`);
+        console.log(interactable);
+        const gridTarget = interact.snappers.grid({
+            x: 1,
+            y: itemHeight,
         });
-        rulerElement.style.transform = `translate(0, ${$rulers[idx].position}px)`;
-    };
-
-    interactable.draggable({
-        lockAxis: "y",
-        listeners: {
-            move(e) {
-                moveRuler(e.dx, e.dy, e.target);
+        interactable.draggable({
+            lockAxis: "y",
+            listeners: {
+                move(e) {
+                    moveRuler(e.dx, e.dy, e.target);
+                },
             },
-        },
-        modifiers: [
-            interact.modifiers.snap({
-                offset: "parent",
-                relativePoints: [{ x: 0, y: 0 }],
-                targets: [gridTarget],
-            }),
-        ],
+            modifiers: [
+                interact.modifiers.snap({
+                    offset: "parent",
+                    relativePoints: [{ x: 0, y: 0 }],
+                    targets: [gridTarget],
+                }),
+            ],
+        });
     });
 
     // event handler for up/down arrows
@@ -70,12 +74,10 @@
 </script>
 
 <div class="ruler_container no_select">
-    <button id="top_button" on:click={shift} data-ruler-id={rulerType}
-        >up</button
-    >
+    <button id="top_button" on:click={shift} data-ruler-id={id}>up</button>
     <div class="ruler_parent">
         <!-- direct parent to use as snap grid offset -->
-        <div class="ruler" id={rulerType}>
+        <div class="ruler" {id}>
             {#each $visibleItems[rulerType] as item}
                 <div class="item">
                     <span class="label">{item}</span>
@@ -87,7 +89,7 @@
     <button
         id="bottom_button"
         on:click={(e) => shift(e, true)}
-        data-ruler-id={rulerType}>down</button
+        data-ruler-id={id}>down</button
     >
 </div>
 

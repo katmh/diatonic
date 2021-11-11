@@ -1,18 +1,22 @@
 import { writable, derived } from 'svelte/store';
 import rulerItems from "./data/items.js";
 import itemHeight from "./data/itemHeight.js";
+import generateID from "./utils/ID.js";
 
 // TODO: ruler unique IDs so we can have e.g. multiple "number"-type rulers
 export const rulers = writable([
     {
+        id: generateID(),
         type: "pitch",
         position: 0,
     },
     {
+        id: generateID(),
         type: "number",
         position: 0,
     },
     {
+        id: generateID(),
         type: "interval",
         position: 0,
     }
