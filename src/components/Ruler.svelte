@@ -9,27 +9,43 @@
 
     const type = $rulers[id].type;
 
-    const moveRuler = (dy: number, rulerElement: HTMLElement) => {
+    const moveRuler = (dy: number) => {
+        // infinite ruler:
+        // abs(dy) is always itemHeight
+        // -dy (move up) => add -1 items to top, add +1 items to bottom
+        // +dy (move down) => add +1 items to top, add -1 items to bottom
+        let newItems;
+        if (dy < 0) {
+            const currentLastItem = $rulers[id].items.at(-1);
+            const nextItem = allItems[type].at(
+                (allItems[type].indexOf(currentLastItem) + 1) %
+                    allItems[type].length
+            );
+            newItems = $rulers[id].items.slice(1).concat([nextItem]);
+        } else if (dy > 0) {
+            const currentFirstItem = $rulers[id].items[0];
+            const previousItem = allItems[type].at(
+                (allItems[type].indexOf(currentFirstItem) - 1) %
+                    allItems[type].length
+            );
+            newItems = [previousItem].concat(
+                $rulers[id].items.slice(0, $rulers[id].items.length - 1)
+            );
+        }
+
         // update `position` property of ruler in store
-        // TODO: and `items` (for infinite ruler)
         rulers.update((rulers) => ({
             ...rulers,
             [id]: {
                 ...rulers[id],
                 position: rulers[id].position + dy,
+                items: newItems ?? rulers[id].items, // don't replace if dy == 0
             },
         }));
-        // move the ruler on the screen accordingly
-        rulerElement.style.transform = `translate(0, ${$rulers[id].position}px)`;
     };
 
     // event handler for up/down arrows
-    // TODO: update position in store
-    const shift = (e, down = false) =>
-        moveRuler(
-            down ? itemHeight : -itemHeight,
-            document.getElementById(e.target.dataset.rulerId)
-        );
+    const shift = (down = false) => moveRuler(down ? itemHeight : -itemHeight);
 
     onMount(async () => {
         // make ruler take up full height of viewport
@@ -58,7 +74,7 @@
             lockAxis: "y",
             listeners: {
                 move(e) {
-                    moveRuler(e.dy, e.target);
+                    moveRuler(e.dy);
                 },
             },
             modifiers: [
@@ -73,7 +89,9 @@
 </script>
 
 <div class="ruler_container no_select">
-    <button id="top_button" on:click={shift} data-ruler-id={id}>up</button>
+    <button id="top_button" on:click={() => shift()} data-ruler-id={id}
+        >up</button
+    >
     <div class="ruler_parent">
         <!-- direct parent to use as snap grid offset -->
         <div class="ruler" {id}>
@@ -85,10 +103,8 @@
             {/each}
         </div>
     </div>
-    <button
-        id="bottom_button"
-        on:click={(e) => shift(e, true)}
-        data-ruler-id={id}>down</button
+    <button id="bottom_button" on:click={() => shift(true)} data-ruler-id={id}
+        >down</button
     >
 </div>
 
