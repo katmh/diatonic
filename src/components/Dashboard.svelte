@@ -3,15 +3,15 @@
     import presets from "../data/presets.js";
     import generateID from "../utils/ID.js";
 
-    let selectedMode;
-    const handleSelectMode = async () => {
-        if (!selectedMode) {
+    let selectedPreset;
+    const handleSelectPreset = async () => {
+        if (!selectedPreset) {
             rulers.update(() => ({}));
             return;
         }
         rulers.update(() => {
             let newRulers = {};
-            selectedMode.rulers.forEach(
+            selectedPreset.rulers.forEach(
                 (type: string) =>
                     (newRulers[generateID()] = {
                         type,
@@ -24,6 +24,21 @@
     };
 
     $: keys = Object.keys($inWindow);
+
+    const toListString = (arr) => {
+        if (arr.length === 1) {
+            return arr[0];
+        }
+        if (arr.length === 2) {
+            return `${arr[0]} and ${arr[1]}`;
+        }
+        return (
+            arr
+                .slice(0, arr.length - 1)
+                .toString()
+                .replaceAll(",", ", ") + `, and ${arr[arr.length - 1]}`
+        );
+    };
 </script>
 
 <div class="dashboard">
@@ -40,14 +55,22 @@
     <select
         name="mode"
         id="mode"
-        bind:value={selectedMode}
-        on:change={handleSelectMode}
+        bind:value={selectedPreset}
+        on:change={handleSelectPreset}
     >
         <option value="" />
         {#each presets as preset}
             <option value={preset}>{preset.label}</option>
         {/each}
     </select>
+
+    {#if selectedPreset}
+        <p>
+            <i>{selectedPreset.label}</i> uses the
+            <b>{toListString(selectedPreset.rulers)}</b>
+            ruler{selectedPreset.rulers.length > 1 ? "s" : ""}.
+        </p>
+    {/if}
 
     <br />
     <br />
