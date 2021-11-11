@@ -15,7 +15,7 @@
         y: itemHeight,
     });
 
-    const moveRuler = (dy: number) => {
+    const moveRuler = (dy: number, rulerElement: HTMLElement) => {
         // infinite ruler:
         // abs(dy) is always itemHeight
         // -dy (move up) => add -1 items to top, add +1 items to bottom
@@ -40,6 +40,9 @@
                 $rulers[id].items.slice(0, $rulers[id].items.length - 1)
             );
         }
+        if (type === "interval") {
+            newItems = undefined;
+        }
 
         // update `position` property of ruler in store
         rulers.update((rulers) => ({
@@ -50,16 +53,37 @@
                 items: newItems ?? rulers[id].items, // don't replace if dy == 0
             },
         }));
+
+        // move ruler on the screen
+        if (type === "interval") {
+            rulerElement.style.transform = `translate(0, ${
+                $rulers[id].position * itemHeight
+            }px)`;
+        }
     };
 
     // event handler for up/down arrows
-    const shift = (down = false) => moveRuler(down ? itemHeight : -itemHeight);
+    const shift = (e, down = false) =>
+        moveRuler(
+            down ? itemHeight : -itemHeight,
+            document.getElementById(e.target.dataset.rulerId)
+        );
 
     beforeUpdate(async () => {
+        // make ruler take up full height of viewport
         if ($rulers[id].items.length != 0) {
             return;
         }
-        // make ruler take up full height of viewport
+        if (type === "interval") {
+            rulers.update((rulers) => ({
+                ...rulers,
+                [id]: {
+                    ...rulers[id],
+                    items: allItems.interval,
+                },
+            }));
+            return;
+        }
         let remainingHeight = window.innerHeight;
         while (remainingHeight > 0) {
             const currentItems = $rulers[id].items;
@@ -88,7 +112,7 @@
             lockAxis: "y",
             listeners: {
                 move(e) {
-                    moveRuler(e.dy);
+                    moveRuler(e.dy, e.target);
                 },
             },
             modifiers: [
@@ -104,7 +128,7 @@
 
 <div class="ruler_container no_select">
     <div class="button_container" id="top_button_container">
-        <button on:click={() => shift()} data-ruler-id={id}>
+        <button on:click={(e) => shift(e)} data-ruler-id={id}>
             <div class="triangle" id="top_triangle" />
         </button>
     </div>
@@ -120,7 +144,7 @@
         </div>
     </div>
     <div class="button_container" id="bottom_button_container">
-        <button on:click={() => shift(true)} data-ruler-id={id}>
+        <button on:click={(e) => shift(e, true)} data-ruler-id={id}>
             <div class="triangle" id="bottom_triangle" />
         </button>
     </div>
