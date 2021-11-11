@@ -125,10 +125,23 @@
 <style>
     button {
         position: absolute;
+        width: 100%;
+        z-index: 1;
+        padding: 1rem 0;
+        border: none;
+        background: linear-gradient(
+            rgba(255, 255, 255, 1) 60%,
+            rgba(255, 255, 255, 0)
+        );
     }
 
     #bottom_button {
         bottom: 0;
+        background: linear-gradient(
+            to top,
+            rgba(255, 255, 255, 1) 60%,
+            rgba(255, 255, 255, 0)
+        );
     }
 
     .ruler_container {
@@ -136,18 +149,19 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-    }
-
-    button {
-        z-index: 1;
+        position: relative;
     }
 
     .ruler {
         display: flex;
         flex-direction: column;
         text-align: center;
-        border: 1px solid #aaa;
-        width: min-content;
+        border: 1px solid #776644;
+        width: 110px;
+        position: relative;
+        z-index: 0;
+        margin: 0 5px;
+        background: #fffadc;
     }
 
     .item {
@@ -161,7 +175,7 @@
         display: block;
         position: relative;
         z-index: 1;
-        background: #fff;
+        background: #fffadc;
         padding: 0 0.25rem;
         font: normal 20px/1 system-ui;
         width: max-content;
@@ -173,6 +187,9 @@
         left: 0;
         top: 50%;
         z-index: 0;
-        border: 1px solid #ccc;
+        border-top: 1px solid #776644;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
     }
 </style>

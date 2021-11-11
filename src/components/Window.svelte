@@ -1,11 +1,12 @@
 <script lang="ts">
     import interact from "interactjs";
-    import { windowPosition, rulers, inWindow } from "../stores.js";
+    import { windowPosition, rulers } from "../stores.js";
     import { onMount } from "svelte";
     const interactable = interact(`#window`);
     import itemHeight from "../data/itemHeight.js";
 
-    const windowWidth = Object.keys($rulers).length * 100 + 100; // TODO
+    $: numRulers = Object.keys($rulers).length;
+    $: windowWidth = numRulers * 110 + (numRulers - 1) * 10 + 40;
 
     const moveWindow = (dy, windowElement) => {
         windowPosition.update((position) => position + dy / itemHeight);
@@ -52,10 +53,13 @@
 
 <style>
     #window {
-        border: 1px solid red;
+        border: 2px solid #bb9955;
+        border-right-width: 20px;
+        border-left-width: 20px;
         height: var(--item-height);
         width: var(--window-width);
         position: absolute;
-        margin-left: -50px;
+        z-index: 1;
+        background: rgba(240, 220, 150, 0.3);
     }
 </style>
