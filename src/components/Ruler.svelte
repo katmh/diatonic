@@ -7,9 +7,8 @@
     import getAt from "../utils/getAt.js";
 
     export let id: string;
-    const type = $rulers[id].type;
+    $: type = $rulers[id].type;
     $: items = $rulers[id].items;
-    let interactable;
     const gridTarget = interact.snappers.grid({
         x: 1,
         y: itemHeight,
@@ -70,6 +69,8 @@
         );
 
     afterUpdate(async () => {
+        console.log(type);
+
         // make ruler take up full height of viewport
         if ($rulers[id].items.length != 0) {
             return;
