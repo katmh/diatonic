@@ -3,7 +3,7 @@
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import interact from "interactjs";
-    import { beforeUpdate, afterUpdate } from "svelte";
+    import { afterUpdate } from "svelte";
     import getAt from "../utils/getAt.js";
 
     export let id: string;
@@ -54,7 +54,7 @@
             },
         }));
 
-        // move ruler on the screen
+        // move interval ruler on the screen
         if (type === "interval") {
             rulerElement.style.transform = `translate(0, ${
                 $rulers[id].position * itemHeight
@@ -69,7 +69,7 @@
             document.getElementById(e.target.dataset.rulerId)
         );
 
-    beforeUpdate(async () => {
+    afterUpdate(async () => {
         // make ruler take up full height of viewport
         if ($rulers[id].items.length != 0) {
             return;
@@ -82,32 +82,25 @@
                     items: allItems.interval,
                 },
             }));
-            return;
+        } else {
+            let remainingHeight = window.innerHeight;
+            while (remainingHeight > 0) {
+                const currentItems = $rulers[id].items;
+                const nextItem =
+                    allItems[type][currentItems.length % allItems[type].length];
+                const itemsPlusNextItem = currentItems.concat([nextItem]);
+                rulers.update((rulers) => ({
+                    ...rulers,
+                    [id]: {
+                        ...rulers[id],
+                        items: itemsPlusNextItem,
+                    },
+                }));
+                remainingHeight -= itemHeight;
+            }
         }
-        let remainingHeight = window.innerHeight;
-        while (remainingHeight > 0) {
-            const currentItems = $rulers[id].items;
-            const nextItem =
-                allItems[type][currentItems.length % allItems[type].length];
-            const itemsPlusNextItem = currentItems.concat([nextItem]);
-            rulers.update((rulers) => ({
-                ...rulers,
-                [id]: {
-                    ...rulers[id],
-                    items: itemsPlusNextItem,
-                },
-            }));
-            remainingHeight -= itemHeight;
-        }
-        interactable = undefined;
-    });
 
-    afterUpdate(async () => {
-        if (interactable) {
-            return;
-        }
-        items = $rulers[id].items; // force update
-        interactable = interact(`#${id}`);
+        const interactable = interact(`#${id}`);
         interactable.draggable({
             lockAxis: "y",
             listeners: {
