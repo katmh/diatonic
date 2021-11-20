@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { rulers } from "../stores.js";
+    import { rulers, rulerPositions } from "../stores.js";
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import interact from "interactjs";
@@ -15,6 +15,8 @@
     });
 
     const moveRuler = (dy: number, rulerElement: HTMLElement) => {
+        console.log($rulers[id].position, dy);
+
         // infinite ruler:
         // abs(dy) is always itemHeight
         // -dy (move up) => add -1 items to top, add +1 items to bottom
@@ -59,6 +61,8 @@
                 $rulers[id].position * itemHeight
             }px)`;
         }
+
+        console.log($rulerPositions);
     };
 
     // event handler for up/down arrows
@@ -120,10 +124,10 @@
     const getClasses = (item: string) => {
         let classes = [];
         if (type === "interval" && item === "P1") {
-            classes.push("highlighted");
+            classes.push("highlighted_P1");
         }
         if (type === "position" && parseInt(item)) {
-            classes.push("highlighted");
+            classes.push("highlighted_diatonic");
         }
         return classes.join(" ");
     };
@@ -154,11 +158,23 @@
 </div>
 
 <style>
-    .highlighted {
+    .highlighted_P1 {
         color: red;
     }
-    .highlighted .mark {
+    .highlighted_P1 .label {
+    }
+    .highlighted_P1 .mark {
         border-color: red;
+    }
+
+    .highlighted_diatonic {
+        background: #e0d0b0;
+    }
+    .highlighted_diatonic .label {
+        background: #e0d0b0;
+    }
+    .highlighted_diatonic .mark {
+        border-color: white;
     }
 
     .button_container {
