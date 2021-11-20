@@ -69,8 +69,6 @@
         );
 
     afterUpdate(async () => {
-        console.log(type);
-
         // make ruler take up full height of viewport
         if ($rulers[id].items.length != 0) {
             return;
@@ -130,7 +128,11 @@
         <!-- direct parent to use as snap grid offset -->
         <div class="ruler" {id}>
             {#each items as item}
-                <div class="item">
+                <div
+                    class="item {type === 'interval' && item === 'P1'
+                        ? 'highlighted'
+                        : ''}"
+                >
                     <span class="label">{item}</span>
                     <hr class="mark" />
                 </div>
@@ -145,6 +147,13 @@
 </div>
 
 <style>
+    .highlighted {
+        color: red;
+    }
+    .highlighted .mark {
+        border-color: red;
+    }
+
     .button_container {
         position: absolute;
         width: 100%;
