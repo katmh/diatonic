@@ -9,7 +9,7 @@ export const rulers = writable({
         items: []
     },
     [generateID()]: {
-        type: "number",
+        type: "position",
         position: 0,
         items: []
     },
