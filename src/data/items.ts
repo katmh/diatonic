@@ -13,6 +13,36 @@ const number = [
     "1",
 ];
 
+const degree = [
+    "7",
+    "♯6/♭7",
+    "6",
+    "♯5/♭6",
+    "5",
+    "♯4/♭5",
+    "4",
+    "3",
+    "♯2/♭3",
+    "2",
+    "♯1/♭2",
+    "1",
+];
+
+const position = [
+    "7",
+    "♯6/♭7",
+    "6",
+    "♯5/♭6",
+    "5",
+    "♯4/♭5",
+    "4",
+    "3",
+    "♯2/♭3",
+    "2",
+    "♯1/♭2",
+    "1",
+];
+
 const pitch = [
     "B",
     "A♯/B♭",
@@ -56,4 +86,4 @@ const interval = [
     "P1"
 ]
 
-export default { number, pitch, interval };
+export default { number, degree, position, pitch, interval };

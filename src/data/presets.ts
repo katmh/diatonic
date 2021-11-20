@@ -7,13 +7,21 @@ export default [
     {
         name: "key_signature",
         label: "Key signature / diatonic scale",
-        rulers: ["pitch", "number"],
-        // rulers: ["pitch", "degree"],
+        rulers: ["pitch", "position"],
     },
     {
         name: "key",
         label: "Key",
-        rulers: ["pitch", "number", "number"],
-        // rulers: ["pitch", "degree", "position"],
+        rulers: ["pitch", "position", "degree"],
+    },
+    {
+        name: "key_signature_modulator",
+        label: "Key signature modulator",
+        rulers: ["pitch", "position", "position"],
+    },
+    {
+        name: "transposition",
+        label: "Transposition",
+        rulers: ["pitch", "pitch"]
     }
 ]
