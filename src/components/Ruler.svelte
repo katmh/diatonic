@@ -116,6 +116,17 @@
             ],
         });
     });
+
+    const getClasses = (item: string) => {
+        let classes = [];
+        if (type === "interval" && item === "P1") {
+            classes.push("highlighted");
+        }
+        if (type === "position" && parseInt(item)) {
+            classes.push("highlighted");
+        }
+        return classes.join(" ");
+    };
 </script>
 
 <div class="ruler_container no_select">
@@ -128,11 +139,7 @@
         <!-- direct parent to use as snap grid offset -->
         <div class="ruler" {id}>
             {#each items as item}
-                <div
-                    class="item {type === 'interval' && item === 'P1'
-                        ? 'highlighted'
-                        : ''}"
-                >
+                <div class="item {getClasses(item)}">
                     <span class="label">{item}</span>
                     <hr class="mark" />
                 </div>
