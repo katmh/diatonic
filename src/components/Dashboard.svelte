@@ -73,7 +73,6 @@
     {/if}
 
     <br />
-    <br />
 
     {#each keys as key}
         <p>{$rulers[key].type}: {$inWindow[key]}</p>
@@ -82,8 +81,8 @@
 
 <style>
     .dashboard {
-        width: 200px;
-        padding-top: 1rem;
+        width: 50%;
+        padding: 1rem;
         font: 1rem/1.25 system-ui;
         background: #efefef;
     }
