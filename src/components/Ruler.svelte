@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { rulers, rulerPositions } from "../stores.js";
+    import { rulers } from "../stores.js";
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import interact from "interactjs";
@@ -61,8 +61,6 @@
                 $rulers[id].position * itemHeight
             }px)`;
         }
-
-        console.log($rulerPositions);
     };
 
     // event handler for up/down arrows
