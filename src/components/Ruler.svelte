@@ -142,7 +142,7 @@
         <div class="ruler" {id}>
             {#each items as item}
                 <div class="item {getClasses(item)}">
-                    <span class="label">{item}</span>
+                    <span class="label">{@html item}</span>
                     <hr class="mark" />
                 </div>
             {/each}
@@ -166,10 +166,11 @@
     }
 
     .highlighted_diatonic {
-        background: #e0d0b0;
+        background: #555;
     }
     .highlighted_diatonic .label {
-        background: #e0d0b0;
+        background: #555;
+        color: #fefefe;
     }
     .highlighted_diatonic .mark {
         border-color: white;
@@ -239,11 +240,11 @@
         flex-direction: column;
         text-align: center;
         border: 1px solid #776644;
-        width: 110px;
+        width: 130px;
         position: relative;
         z-index: 0;
         margin: 0 5px;
-        background: #fffadc;
+        background: #fefefe;
     }
 
     .item {
@@ -257,10 +258,12 @@
         display: block;
         position: relative;
         z-index: 1;
-        background: #fffadc;
+        background: #fefefe;
         padding: 0 0.25rem;
-        font: normal 20px/1 system-ui;
+        font-size: 20px;
+        line-height: 1;
         width: max-content;
+        font-family: Lato;
     }
 
     .mark {

@@ -13,20 +13,17 @@ const number = [
     "1",
 ];
 
-const degree = [
-    "7",
-    "♯6/♭7",
-    "6",
-    "♯5/♭6",
-    "5",
-    "♯4/♭5",
-    "4",
-    "3",
-    "♯2/♭3",
-    "2",
-    "♯1/♭2",
-    "1",
-];
+const degree = number.map((item) => {
+    const openTag = "<span class='caret'>"
+    const closeTag = "</span>"
+    const split = item.split("/")
+    if (split.length === 1) {
+        return openTag + item + closeTag;
+    }
+    const firstNum = split[0].slice(1)
+    const secondNum = split[1].slice(1)
+    return `♯${openTag}${firstNum}${closeTag}/♭${openTag}${secondNum}${closeTag}`
+})
 
 const position = [
     "7",

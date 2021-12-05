@@ -75,15 +75,22 @@
     <br />
 
     {#each keys as key}
-        <p>{$rulers[key].type}: {$inWindow[key]}</p>
+        <p>{$rulers[key].type}: {@html $inWindow[key]}</p>
     {/each}
 </div>
 
 <style>
+    @media (max-width: 600px) {
+        .dashboard {
+            display: none;
+        }
+    }
+
     .dashboard {
         width: 50%;
         padding: 1rem;
-        font: 1rem/1.25 system-ui;
+        font-size: 1rem;
+        line-height: 1.25;
         background: #efefef;
     }
 
