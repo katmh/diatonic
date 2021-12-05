@@ -6,8 +6,15 @@
 
 body,
 html {
-    max-height: 100vh;
-    overflow-y: hidden;
+    height: 100%;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    overflow: auto;
 }
 
 .no_select {
