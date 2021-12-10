@@ -42,7 +42,14 @@
 </script>
 
 <div class="dashboard">
-    <h1>Music Modulator</h1>
+    <h1>Diatonic Ladder</h1>
+
+    <p>
+        The diatonic ruler expands on <a
+            href="https://musictheoryexamplesbywomen.com/theorists/sarah-ann-glover-1786-1867/"
+            >Sarah Anna Glover</a
+        >'s Norwich Sol-Fa System.
+    </p>
 
     <p>
         To get started, select a preset, or explore by shifting the rulers up
@@ -70,6 +77,10 @@
             <b>{toListString(selectedPreset.rulers)}</b>
             ruler{selectedPreset.rulers.length > 1 ? "s" : ""}.
         </p>
+
+        {#if selectedPreset.component}
+            <svelte:component this={selectedPreset.component} />
+        {/if}
     {/if}
 
     <br />
