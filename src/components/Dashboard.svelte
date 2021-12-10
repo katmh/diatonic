@@ -24,21 +24,6 @@
     };
 
     $: keys = Object.keys($inWindow);
-
-    const toListString = (arr) => {
-        if (arr.length === 1) {
-            return arr[0];
-        }
-        if (arr.length === 2) {
-            return `${arr[0]} and ${arr[1]}`;
-        }
-        return (
-            arr
-                .slice(0, arr.length - 1)
-                .toString()
-                .replaceAll(",", ", ") + `, and ${arr[arr.length - 1]}`
-        );
-    };
 </script>
 
 <div class="dashboard">
@@ -71,16 +56,8 @@
         {/each}
     </select>
 
-    {#if selectedPreset}
-        <p>
-            <i>{selectedPreset.label}</i> uses the
-            <b>{toListString(selectedPreset.rulers)}</b>
-            ruler{selectedPreset.rulers.length > 1 ? "s" : ""}.
-        </p>
-
-        {#if selectedPreset.component}
-            <svelte:component this={selectedPreset.component} />
-        {/if}
+    {#if selectedPreset?.component}
+        <svelte:component this={selectedPreset.component} />
     {/if}
 
     <br />
@@ -103,10 +80,5 @@
         font-size: 1rem;
         line-height: 1.25;
         background: #efefef;
-    }
-
-    hr,
-    p {
-        margin: 1rem 0;
     }
 </style>

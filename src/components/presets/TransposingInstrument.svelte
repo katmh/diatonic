@@ -9,4 +9,4 @@
     pitches.
 </p>
 
-instrument in x concert pitch [at cursor] j written pitch [at cursor] k
+<p>instrument in x concert pitch [at cursor] j written pitch [at cursor] k</p>

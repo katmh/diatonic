@@ -4,8 +4,8 @@
 </p>
 
 <p>
-    Align interval P1 to the lower pitch x. Use the cursor to find all intervals
-    from the lower pitch.
+    Setup: Pitch and interval rulers. Align interval P1 to the lower pitch x.
+    Use the cursor to find all intervals from the lower pitch.
 </p>
 
 <p>lower pitch, higher pitch, interval</p>

@@ -1,10 +1,13 @@
 import Interval from "../components/presets/Interval.svelte";
 import TransposingInstrument from "../components/presets/TransposingInstrument.svelte";
+import KeySignature from "../components/presets/KeySignature.svelte";
+import KeySignatureModulator from "../components/presets/KeySignatureModulator.svelte";
+import Key from "../components/presets/Key.svelte";
 
 export default [
     {
         name: "interval",
-        label: "Intervals from a pitch",
+        label: "Interval",
         rulers: ["pitch", "interval"],
         component: Interval,
     },
@@ -16,17 +19,20 @@ export default [
     },
     {
         name: "key_signature",
-        label: "Key signature / diatonic scale",
+        label: "Key signature",
         rulers: ["pitch", "position"],
+        component: KeySignature,
     },
     {
         name: "key_signature_modulator",
         label: "Key signature modulation",
         rulers: ["pitch", "position", "position"],
+        component: KeySignatureModulator,
     },
     {
         name: "key",
-        label: "Key (key signature and tonic)",
+        label: "Key (Key signature and tonic)",
         rulers: ["pitch", "position", "degree"],
+        component: Key
     },
 ]
