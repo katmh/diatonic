@@ -214,6 +214,7 @@
         flex-direction: column;
         text-align: center;
         border: 1px solid #776644;
+        border-bottom: none;
         width: 130px;
         position: relative;
         z-index: 0;
@@ -244,7 +245,7 @@
         position: absolute;
         width: 100%;
         left: 0;
-        top: 50%;
+        top: calc(50% + 1px);
         z-index: 0;
         border-top: 1px solid #776644;
         border-bottom: none;
