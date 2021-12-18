@@ -50,18 +50,19 @@
 
     <hr />
 
-    <label for="mode"><b>Preset:</b></label>
-    <select
-        name="mode"
-        id="mode"
-        bind:value={$selectedPreset}
-        on:change={updatePreset}
-    >
-        <option value="" />
-        {#each presets as preset}
-            <option value={preset.name}>{preset.label}</option>
-        {/each}
-    </select>
+    <b>Presets</b>
+
+    {#each presets as preset}
+        <input
+            type="radio"
+            name="preset"
+            id={preset.name}
+            value={preset.name}
+            bind:group={$selectedPreset}
+            on:change={updatePreset}
+        />
+        <label for={preset.name}>{preset.label}</label>
+    {/each}
 
     <br />
 
@@ -83,5 +84,24 @@
         font-size: 1rem;
         line-height: 1.25;
         background: #efefef;
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    label {
+        display: block;
+        padding: 0.25rem 0.5rem;
+        transition: 0.1s;
+        cursor: pointer;
+    }
+
+    label:hover {
+        background: #ddd;
+    }
+
+    input[type="radio"]:checked + label {
+        background: #ccc;
     }
 </style>
