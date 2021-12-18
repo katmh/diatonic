@@ -1,7 +1,7 @@
 import Interval from "../components/presets/Interval.svelte";
 import TransposingInstrument from "../components/presets/TransposingInstrument.svelte";
 import KeySignature from "../components/presets/KeySignature.svelte";
-import KeySignatureModulator from "../components/presets/KeySignatureModulator.svelte";
+import KeySignatureModulation from "../components/presets/KeySignatureModulation.svelte";
 import Key from "../components/presets/Key.svelte";
 
 export default [
@@ -27,7 +27,7 @@ export default [
         name: "key_signature_modulator",
         label: "Key signature modulation",
         rulers: ["pitch", "position", "position"],
-        component: KeySignatureModulator,
+        component: KeySignatureModulation,
     },
     {
         name: "key",
