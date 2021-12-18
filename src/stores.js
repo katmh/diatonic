@@ -1,6 +1,4 @@
 import { writable, derived } from 'svelte/store';
-import allItems from "./data/items.js";
-import generateID from "./utils/ID.js";
 
 export const selectedPreset = writable("interval");
 
@@ -15,11 +13,11 @@ export const inWindow = derived([rulers, windowPosition], ([rulers, windowPositi
     let items = {};
     for (const key in rulers) {
         const ruler = rulers[key];
-        let itemInWindow = allItems[ruler.type][mod(windowPosition - ruler.position, allItems[ruler.type].length)];
-        if (ruler.type === "interval") { 
-            if (windowPosition - ruler.position < 0 || windowPosition - ruler.position >= allItems["interval"].length) {
-                itemInWindow = "N/A";
-            }
+        const diff = windowPosition - ruler.position;
+        let itemInWindow = ruler.items[mod(diff, ruler.items.length)];
+        if (diff < 0 || diff >= ruler.items.length) {
+            // first condition is ruler being above window, second is below
+            itemInWindow = "N/A";
         }
         items[key] = itemInWindow;
     }

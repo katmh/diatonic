@@ -4,63 +4,37 @@
     import itemHeight from "../data/itemHeight.js";
     import interact from "interactjs";
     import { afterUpdate } from "svelte";
-    import getAt from "../utils/getAt.js";
 
     export let id: string;
-    $: type = $rulers[id].type;
-    $: items = $rulers[id].items;
+    let rulerComponent: HTMLElement, type: string, items: string[];
+    $: {
+        type = $rulers[id].type;
+        items = $rulers[id].items;
+        if (rulerComponent) {
+            // ensure that new rulers appear at position 0, not offset
+            rulerComponent.style.transform = `translate(0, ${
+                $rulers[id].position * itemHeight
+            }px)`;
+        }
+    }
     const gridTarget = interact.snappers.grid({
         x: 1,
         y: itemHeight,
     });
 
     const moveRuler = (dy: number, rulerElement: HTMLElement) => {
-        console.log($rulers[id].position, dy);
-
-        // infinite ruler:
-        // abs(dy) is always itemHeight
-        // -dy (move up) => add -1 items to top, add +1 items to bottom
-        // +dy (move down) => add +1 items to top, add -1 items to bottom
-        let newItems;
-        if (dy < 0) {
-            const currentLastItem = getAt($rulers[id].items, -1);
-            const nextItem = getAt(
-                allItems[type],
-                (allItems[type].indexOf(currentLastItem) + 1) %
-                    allItems[type].length
-            );
-            newItems = $rulers[id].items.slice(1).concat([nextItem]);
-        } else if (dy > 0) {
-            const currentFirstItem = $rulers[id].items[0];
-            const previousItem = getAt(
-                allItems[type],
-                (allItems[type].indexOf(currentFirstItem) - 1) %
-                    allItems[type].length
-            );
-            newItems = [previousItem].concat(
-                $rulers[id].items.slice(0, $rulers[id].items.length - 1)
-            );
-        }
-        if (type === "interval") {
-            newItems = undefined;
-        }
-
         // update `position` property of ruler in store
         rulers.update((rulers) => ({
             ...rulers,
             [id]: {
                 ...rulers[id],
                 position: rulers[id].position + dy / itemHeight,
-                items: newItems ?? rulers[id].items, // don't replace if dy == 0
             },
         }));
-
-        // move interval ruler on the screen
-        if (type === "interval") {
-            rulerElement.style.transform = `translate(0, ${
-                $rulers[id].position * itemHeight
-            }px)`;
-        }
+        // move ruler on the screen
+        rulerElement.style.transform = `translate(0, ${
+            $rulers[id].position * itemHeight
+        }px)`;
     };
 
     // event handler for up/down arrows
@@ -139,7 +113,7 @@
     </div>
     <div class="ruler_parent">
         <!-- direct parent to use as snap grid offset -->
-        <div class="ruler" {id}>
+        <div class="ruler" {id} bind:this={rulerComponent}>
             {#each items as item}
                 <div class="item {getClasses(item)}">
                     <span class="label">{@html item}</span>
