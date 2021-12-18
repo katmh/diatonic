@@ -1,17 +1,24 @@
 <script lang="ts">
-    import { rulers, inWindow } from "../stores.js";
+    import { rulers, inWindow, selectedPreset } from "../stores.js";
     import presets from "../data/presets.js";
     import generateID from "../utils/ID.js";
+    import { onMount } from "svelte";
 
-    let selectedPreset;
-    const handleSelectPreset = async () => {
-        if (!selectedPreset) {
+    onMount(() => {
+        updatePreset();
+    });
+
+    $: presetObject =
+        presets[presets.findIndex((item) => item.name === $selectedPreset)];
+
+    const updatePreset = () => {
+        if (!$selectedPreset) {
             rulers.update(() => ({}));
             return;
         }
         rulers.update(() => {
             let newRulers = {};
-            selectedPreset.rulers.forEach(
+            presetObject.rulers.forEach(
                 (type: string) =>
                     (newRulers[generateID()] = {
                         type,
@@ -47,18 +54,14 @@
     <select
         name="mode"
         id="mode"
-        bind:value={selectedPreset}
-        on:change={handleSelectPreset}
+        bind:value={$selectedPreset}
+        on:change={updatePreset}
     >
         <option value="" />
         {#each presets as preset}
-            <option value={preset}>{preset.label}</option>
+            <option value={preset.name}>{preset.label}</option>
         {/each}
     </select>
-
-    {#if selectedPreset?.component}
-        <svelte:component this={selectedPreset.component} />
-    {/if}
 
     <br />
 
