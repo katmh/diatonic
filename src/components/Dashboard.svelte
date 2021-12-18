@@ -1,27 +1,6 @@
 <script lang="ts">
-    import { rulers, inWindow } from "../stores.js";
+    import { rulers, inWindow, selectedPreset } from "../stores.js";
     import presets from "../data/presets.js";
-    import generateID from "../utils/ID.js";
-
-    let selectedPreset;
-    const handleSelectPreset = async () => {
-        if (!selectedPreset) {
-            rulers.update(() => ({}));
-            return;
-        }
-        rulers.update(() => {
-            let newRulers = {};
-            selectedPreset.rulers.forEach(
-                (type: string) =>
-                    (newRulers[generateID()] = {
-                        type,
-                        position: 0,
-                        items: [],
-                    })
-            );
-            return newRulers;
-        });
-    };
 
     $: keys = Object.keys($inWindow);
 </script>
@@ -43,22 +22,16 @@
 
     <hr />
 
-    <label for="mode"><b>Preset:</b></label>
-    <select
-        name="mode"
-        id="mode"
-        bind:value={selectedPreset}
-        on:change={handleSelectPreset}
-    >
-        <option value="" />
-        {#each presets as preset}
-            <option value={preset}>{preset.label}</option>
-        {/each}
-    </select>
-
-    {#if selectedPreset?.component}
-        <svelte:component this={selectedPreset.component} />
-    {/if}
+    {#each presets as preset}
+        <input
+            type="radio"
+            name="preset"
+            id={preset.name}
+            value={preset.name}
+            bind:group={$selectedPreset}
+        />
+        <label for={preset.name}>{preset.label}</label>
+    {/each}
 
     <br />
 

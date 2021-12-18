@@ -3,10 +3,15 @@
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import interact from "interactjs";
-    import { afterUpdate } from "svelte";
+    import { onMount, afterUpdate } from "svelte";
     import getAt from "../utils/getAt.js";
 
     export let id: string;
+
+    onMount(() => {
+        console.log("ON MOUNT");
+    });
+    $: console.log(id, "hi", $rulers);
     $: type = $rulers[id].type;
     $: items = $rulers[id].items;
     const gridTarget = interact.snappers.grid({

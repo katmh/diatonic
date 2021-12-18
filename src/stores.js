@@ -1,24 +1,10 @@
 import { writable, derived } from 'svelte/store';
-import allItems from "./data/items.js";
-import generateID from "./utils/ID.js";
+import allItems from "./data/items";
+import presets from "./data/presets";
 
-export const rulers = writable({
-    [generateID()]: {
-        type: "pitch",
-        position: 0,
-        items: []
-    },
-    [generateID()]: {
-        type: "position",
-        position: 0,
-        items: []
-    },
-    [generateID()]: {
-        type: "interval",
-        position: 0,
-        items: []
-    }
-})
+export const selectedPreset = writable(presets[0].name);
+
+export const rulers = writable({})
 
 export const windowPosition = writable(0);
 
