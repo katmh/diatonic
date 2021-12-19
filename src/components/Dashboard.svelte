@@ -1,69 +1,32 @@
 <script lang="ts">
     import { rulers, inWindow, selectedPreset } from "../stores.js";
     import presets from "../data/presets.js";
-    import generateID from "../utils/ID.js";
     import { onMount } from "svelte";
-
-    onMount(() => {
-        updatePreset();
-    });
+    import updatePreset from "../utils/updatePreset.js";
+    import PresetMenu from "./PresetMenu.svelte";
 
     $: presetObject =
         presets[presets.findIndex((item) => item.name === $selectedPreset)];
 
-    const updatePreset = () => {
-        if (!$selectedPreset) {
-            rulers.update(() => ({}));
-            return;
-        }
-        rulers.update(() => {
-            let newRulers = {};
-            presetObject.rulers.forEach(
-                (type: string) =>
-                    (newRulers[generateID()] = {
-                        type,
-                        position: 0,
-                        items: [],
-                    })
-            );
-            return newRulers;
-        });
-    };
+    onMount(() => {
+        updatePreset(presetObject);
+    });
 
     $: keys = Object.keys($inWindow);
 </script>
 
 <div class="dashboard">
-    <h1>Diatonic Ladder</h1>
+    <h1>Diatonic Ruler</h1>
 
     <p>
         The diatonic ruler expands on <a
             href="https://musictheoryexamplesbywomen.com/theorists/sarah-ann-glover-1786-1867/"
             >Sarah Anna Glover</a
-        >'s Norwich Sol-Fa System.
+        >’s Norwich Sol-Fa System. To get started, select a preset, or explore
+        by shifting the rulers up and down.
     </p>
 
-    <p>
-        To get started, select a preset, or explore by shifting the rulers up
-        and down.
-    </p>
-
-    <hr />
-
-    <b>Presets</b>
-
-    {#each presets as preset}
-        <input
-            type="radio"
-            name="preset"
-            id={preset.name}
-            value={preset.name}
-            bind:group={$selectedPreset}
-            on:change={updatePreset}
-        />
-        <label for={preset.name}>{preset.label}</label>
-    {/each}
-
+    <PresetMenu />
     <br />
 
     {#each keys as key}
@@ -79,29 +42,25 @@
     }
 
     .dashboard {
-        width: 50%;
-        padding: 1rem;
+        width: 100%;
+        max-width: 20rem;
+        padding: 1.5rem 1.25rem;
         font-size: 1rem;
         line-height: 1.25;
-        background: #efefef;
+        border: 1px solid #c4befd;
+        border-radius: 10px;
+        margin: 2rem;
     }
 
-    input[type="radio"] {
-        display: none;
+    h1 {
+        color: #222;
+        font-size: 1.75rem;
+        letter-spacing: -0.3px;
     }
 
-    label {
-        display: block;
-        padding: 0.25rem 0.5rem;
-        transition: 0.1s;
-        cursor: pointer;
-    }
-
-    label:hover {
-        background: #ddd;
-    }
-
-    input[type="radio"]:checked + label {
-        background: #ccc;
+    p {
+        margin: 1.15rem 0;
+        line-height: 1.55;
+        color: #222;
     }
 </style>

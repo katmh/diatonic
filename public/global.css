@@ -7,7 +7,7 @@
 body,
 html {
     height: 100%;
-    font-family: Lato;
+    font-family: Karla;
 }
 
 html {
@@ -33,7 +33,10 @@ body {
     font-size: 0.8em;
 }
 
-p,
-hr {
-    margin: 1rem 0;
+a {
+    color: #6b5fd1;
+}
+
+a:visited {
+    color: #3f387d;
 }

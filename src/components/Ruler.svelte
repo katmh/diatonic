@@ -190,8 +190,8 @@
     }
 
     button {
-        width: 110px;
-        height: 25px;
+        width: 130px;
+        height: 35px;
         background: #efefef;
         border: none;
         cursor: pointer;
@@ -238,7 +238,6 @@
         font-size: 20px;
         line-height: 1;
         width: max-content;
-        font-family: Lato;
     }
 
     .mark {
@@ -251,5 +250,6 @@
         border-bottom: none;
         border-left: none;
         border-right: none;
+        margin: 1rem 0;
     }
 </style>

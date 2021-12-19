@@ -1,35 +1,17 @@
 <script lang="ts">
     import Dashboard from "./components/Dashboard.svelte";
-    import Ruler from "./components/Ruler.svelte";
-    import Window from "./components/Window.svelte";
-    import { rulers } from "./stores.js";
-
-    $: keys = Object.keys($rulers);
+    import RulersContainer from "./components/RulersContainer.svelte";
 </script>
 
 <div class="container">
     <Dashboard />
-    <div class="rulers">
-        <Window />
-        {#each keys as key}
-            <Ruler id={key} />
-        {/each}
-    </div>
+    <RulersContainer />
 </div>
 
 <style>
     .container {
         height: 100%;
-        width: 100%;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        overflow-y: hidden;
-    }
-
-    .rulers {
-        height: 100%;
-        width: 100%;
+        width: auto;
         margin: 0 auto;
         display: flex;
         justify-content: center;
