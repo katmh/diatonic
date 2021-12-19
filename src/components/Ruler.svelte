@@ -1,9 +1,10 @@
 <script lang="ts">
+    import interact from "interactjs";
+    import { afterUpdate } from "svelte";
     import { rulers } from "../stores.js";
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
-    import interact from "interactjs";
-    import { afterUpdate } from "svelte";
+    import UpDownButton from "./UpDownButton.svelte";
 
     export let id: string;
     let rulerComponent: HTMLElement, type: string, items: string[];
@@ -11,7 +12,7 @@
         type = $rulers[id].type;
         items = $rulers[id].items;
         if (rulerComponent) {
-            // ensure that new rulers appear at position 0, not offset
+            // ensure that new rulers appear at position 0 instead of being offset
             rulerComponent.style.transform = `translate(0, ${
                 $rulers[id].position * itemHeight
             }px)`;
@@ -106,11 +107,7 @@
 </script>
 
 <div class="ruler_container no_select">
-    <div class="button_container" id="top_button_container">
-        <button on:click={(e) => shift(e)} data-ruler-id={id}>
-            <div class="triangle" id="top_triangle" />
-        </button>
-    </div>
+    <UpDownButton directionIsUp handleClick={shift} rulerId={id} />
     <div class="ruler_parent">
         <!-- direct parent to use as snap grid offset -->
         <div class="ruler" {id} bind:this={rulerComponent}>
@@ -122,83 +119,21 @@
             {/each}
         </div>
     </div>
-    <div class="button_container" id="bottom_button_container">
-        <button on:click={(e) => shift(e, true)} data-ruler-id={id}>
-            <div class="triangle" id="bottom_triangle" />
-        </button>
-    </div>
+    <UpDownButton directionIsUp={false} handleClick={shift} rulerId={id} />
 </div>
 
 <style>
+    .highlighted_diatonic,
     .highlighted_P1 {
-        color: red;
+        background: #615e7d;
     }
+    .highlighted_diatonic .label,
     .highlighted_P1 .label {
-    }
-    .highlighted_P1 .mark {
-        border-color: red;
-    }
-
-    .highlighted_diatonic {
-        background: #555;
-    }
-    .highlighted_diatonic .label {
-        background: #555;
+        background: #615e7d;
         color: #fefefe;
     }
     .highlighted_diatonic .mark {
         border-color: white;
-    }
-
-    .button_container {
-        position: absolute;
-        width: 100%;
-        z-index: 1;
-        padding: 0.25rem 0 1.5rem;
-        border: none;
-        background: linear-gradient(
-            rgba(255, 255, 255, 1) 60%,
-            rgba(255, 255, 255, 0)
-        );
-        display: flex;
-        justify-content: center;
-        cursor: pointer;
-    }
-    #bottom_button_container {
-        bottom: 0;
-        padding: 1.5rem 0 0.25rem;
-        background: linear-gradient(
-            to top,
-            rgba(255, 255, 255, 1) 60%,
-            rgba(255, 255, 255, 0)
-        );
-    }
-
-    .triangle {
-        width: 0;
-        height: 0;
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        margin: -1px auto 0;
-    }
-    #top_triangle {
-        border-bottom: 12px solid #999;
-    }
-    #bottom_triangle {
-        border-top: 12px solid #999;
-        margin: 1px auto 0;
-    }
-
-    button {
-        width: 130px;
-        height: 35px;
-        background: #efefef;
-        border: none;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-    button:hover {
-        background: #dedede;
     }
 
     .ruler_container {
@@ -213,13 +148,14 @@
         display: flex;
         flex-direction: column;
         text-align: center;
-        border: 1px solid #776644;
+        border: 1px solid #615e7d;
         border-bottom: none;
         width: 130px;
         position: relative;
         z-index: 0;
         margin: 0 5px;
         background: #fefefe;
+        box-shadow: 0 2px 8px rgba(63, 56, 125, 20%);
     }
 
     .item {
@@ -246,7 +182,7 @@
         left: 0;
         top: calc(50% + 1px);
         z-index: 0;
-        border-top: 1px solid #776644;
+        border-top: 1px solid #615e7d;
         border-bottom: none;
         border-left: none;
         border-right: none;

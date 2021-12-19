@@ -16,7 +16,7 @@
 </script>
 
 <div class="dashboard">
-    <h1>Diatonic Ruler</h1>
+    <h1>Diatonic Ruler 🎹</h1>
 
     <p>
         The diatonic ruler expands on <a
@@ -49,13 +49,14 @@
         line-height: 1.25;
         border: 1px solid #c4befd;
         border-radius: 10px;
-        margin: 2rem;
+        margin: 1rem 2rem;
+        box-shadow: 0 2px 4px rgba(63, 56, 125, 20%);
     }
 
     h1 {
         color: #222;
         font-size: 1.75rem;
-        letter-spacing: -0.3px;
+        letter-spacing: -0.5px;
     }
 
     p {

@@ -24,8 +24,8 @@
 <style>
     h2 {
         text-transform: uppercase;
-        font-size: 1rem;
-        border-bottom: 1px solid #aaa;
+        font-size: 1.1rem;
+        margin: 2rem 0 0.5rem;
     }
 
     input[type="radio"] {
@@ -34,16 +34,19 @@
 
     label {
         display: block;
-        padding: 0.5rem 0.75rem;
+        padding: 0.3rem 0.75rem;
+        margin: 0.15rem 0;
         transition: 0.1s;
         cursor: pointer;
+        border-radius: 5px;
     }
 
     label:hover {
-        background: #ddd;
+        background: #dad7fe;
     }
 
     input[type="radio"]:checked + label {
-        background: #ccc;
+        background: #c4befd;
+        font-weight: bold;
     }
 </style>

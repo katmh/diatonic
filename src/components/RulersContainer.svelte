@@ -16,6 +16,7 @@
 <style>
     .rulers_container {
         height: 100%;
+        min-width: 450px;
         display: flex;
         justify-content: center;
         overflow-y: hidden;
