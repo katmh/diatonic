@@ -150,7 +150,6 @@
         text-align: center;
         border: 1px solid #615e7d;
         border-bottom: none;
-        width: 130px;
         position: relative;
         z-index: 0;
         margin: 0 5px;
@@ -160,7 +159,7 @@
 
     .item {
         position: relative;
-        padding: 8px 20px;
+        padding: 8px min(3vw, 24px);
         display: flex;
         justify-content: center;
     }
