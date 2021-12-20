@@ -10,11 +10,7 @@
     on:click={(e) => handleClick(e, !directionIsUp)}
     data-ruler-id={rulerId}
 >
-    <button
-        on:click={(e) => handleClick(e, !directionIsUp)}
-        data-ruler-id={rulerId}
-        aria-label={directionIsUp ? "up" : "down"}
-    >
+    <button aria-label={directionIsUp ? "up" : "down"}>
         <div
             class="triangle"
             id={directionIsUp ? "top_triangle" : "bottom_triangle"}
