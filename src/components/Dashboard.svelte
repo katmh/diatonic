@@ -102,14 +102,26 @@
 
     @media (min-width: 600px) {
         .dashboard {
+            position: static;
             width: 100%;
-            max-width: 20rem;
+            height: auto;
             font-size: 1rem;
             line-height: 1.25;
             border: 1px solid #c4befd;
             border-radius: 10px;
-            margin: 1rem 2rem;
+            margin: 1rem 1rem 1rem 2rem;
             box-shadow: 0 2px 4px rgba(63, 56, 125, 20%);
+        }
+
+        .tab,
+        .overlay {
+            display: none;
+        }
+    }
+
+    @media (min-width: 900px) {
+        .dashboard {
+            margin: 1rem 2rem;
         }
     }
 

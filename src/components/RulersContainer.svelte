@@ -18,12 +18,16 @@
         height: 100%;
         display: flex;
         justify-content: center;
-        overflow: hidden;
     }
 
     @media (min-width: 600px) {
         .rulers_container {
-            min-width: 450px;
+            margin: 0 2rem 0 1rem;
+        }
+    }
+
+    @media (min-width: 900px) {
+        .rulers_container {
             margin: 0 4rem 0 2rem;
         }
     }
