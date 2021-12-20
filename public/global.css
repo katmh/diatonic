@@ -40,3 +40,9 @@ a {
 a:visited {
     color: #3f387d;
 }
+
+.dashboard p {
+    margin: 1.15rem 0;
+    line-height: 1.55;
+    color: #222;
+}

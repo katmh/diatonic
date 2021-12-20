@@ -1,10 +1,11 @@
 <script lang="ts">
-    import interact from "interactjs";
-    import { windowPosition, rulers } from "../stores.js";
     import { onMount } from "svelte";
-    const interactable = interact(`#window`);
+    import interact from "interactjs";
     import itemHeight from "../data/itemHeight.js";
+    import { windowPosition, rulers } from "../stores.js";
+    import itemsInFractionalHeight from "../utils/itemsInFractionalHeight.js";
 
+    const interactable = interact(`#window`);
     $: numRulers = Object.keys($rulers).length;
     $: windowWidth = numRulers * 110 + (numRulers - 1) * 10 + 40;
 
@@ -39,10 +40,8 @@
         // initialize window about halfway down the page
         // initial position should be on itemHeight grid
         const windowElement = document.querySelector("#window");
-        moveWindow(
-            (Math.floor(window.innerHeight / itemHeight) / 2) * itemHeight,
-            windowElement
-        );
+        const itemsInHalfHeight = itemsInFractionalHeight(0.5);
+        moveWindow(itemsInHalfHeight * itemHeight, windowElement);
     });
 </script>
 

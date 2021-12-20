@@ -4,6 +4,7 @@
     import { onMount } from "svelte";
     import updatePreset from "../utils/updatePreset.js";
     import PresetMenu from "./PresetMenu.svelte";
+    import PresetInfo from "./PresetInfo.svelte";
 
     $: presetObject =
         presets[presets.findIndex((item) => item.name === $selectedPreset)];
@@ -43,7 +44,10 @@
     </p>
 
     <PresetMenu />
-    <br />
+
+    {#if presetObject}
+        <PresetInfo preset={presetObject} />
+    {/if}
 
     {#each keys as key}
         <p>{$rulers[key].type}: {@html $inWindow[key]}</p>
@@ -64,6 +68,7 @@
         background: #fff;
         transition: 0.3s;
         padding: 1.5rem 1.25rem;
+        overflow-y: scroll;
     }
 
     .overlay {
@@ -100,16 +105,17 @@
         color: #fff;
     }
 
-    @media (min-width: 600px) {
+    @media (min-width: 900px) {
         .dashboard {
             position: static;
             width: 100%;
+            max-width: 20rem;
             height: auto;
             font-size: 1rem;
             line-height: 1.25;
             border: 1px solid #c4befd;
             border-radius: 10px;
-            margin: 1rem 1rem 1rem 2rem;
+            margin: 1rem 2rem;
             box-shadow: 0 2px 4px rgba(63, 56, 125, 20%);
         }
 
@@ -119,21 +125,9 @@
         }
     }
 
-    @media (min-width: 900px) {
-        .dashboard {
-            margin: 1rem 2rem;
-        }
-    }
-
     h1 {
         color: #222;
         font-size: 1.75rem;
         letter-spacing: -0.5px;
-    }
-
-    p {
-        margin: 1.15rem 0;
-        line-height: 1.55;
-        color: #222;
     }
 </style>
