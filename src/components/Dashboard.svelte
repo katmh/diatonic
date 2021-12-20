@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { rulers, inWindow, selectedPreset } from "../stores.js";
+    import { inWindow, selectedPreset } from "../stores.js";
     import presets from "../data/presets.js";
     import { onMount } from "svelte";
     import updatePreset from "../utils/updatePreset.js";
@@ -12,8 +12,6 @@
     onMount(() => {
         updatePreset(presetObject);
     });
-
-    $: keys = Object.keys($inWindow);
 
     const toggleMobileMenu = (isOpen = false) => {
         const overlay = document.querySelector<HTMLElement>(".overlay");
@@ -49,8 +47,8 @@
         <PresetInfo preset={presetObject} />
     {/if}
 
-    {#each keys as key}
-        <p>{$rulers[key].type}: {@html $inWindow[key]}</p>
+    {#each $inWindow as item}
+        <p>{item}</p>
     {/each}
 </div>
 

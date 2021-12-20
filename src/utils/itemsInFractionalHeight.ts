@@ -7,4 +7,4 @@ const itemsInFractionalHeight = (f: number) => {
     return Math.floor(window.innerHeight * f / itemHeight);
 }
 
-export default itemsInFractionalHeight
+export default itemsInFractionalHeight;

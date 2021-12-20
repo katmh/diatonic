@@ -10,7 +10,7 @@ export const windowPosition = writable(0);
 const mod = (n, m) => ((n % m) + m) % m;
 
 export const inWindow = derived([rulers, windowPosition], ([rulers, windowPosition]) => {
-    let items = {};
+    let items = [];
     for (const key in rulers) {
         const ruler = rulers[key];
         const diff = windowPosition - ruler.position;
@@ -19,7 +19,7 @@ export const inWindow = derived([rulers, windowPosition], ([rulers, windowPositi
             // first condition is ruler being above window, second is below
             itemInWindow = "N/A";
         }
-        items[key] = itemInWindow;
+        items.push([ruler.type, itemInWindow]);
     }
     return items;
 })
