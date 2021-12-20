@@ -16,10 +16,15 @@
 <style>
     .rulers_container {
         height: 100%;
-        min-width: 450px;
         display: flex;
         justify-content: center;
-        overflow-y: hidden;
-        margin: 0 4rem 0 2rem;
+        overflow: hidden;
+    }
+
+    @media (min-width: 600px) {
+        .rulers_container {
+            min-width: 450px;
+            margin: 0 4rem 0 2rem;
+        }
     }
 </style>

@@ -13,7 +13,23 @@
     });
 
     $: keys = Object.keys($inWindow);
+
+    const toggleMobileMenu = (isOpen = false) => {
+        const overlay = document.querySelector<HTMLElement>(".overlay");
+        const dashboard = document.querySelector<HTMLElement>(".dashboard");
+        if (isOpen) {
+            overlay.style.display = "none";
+            dashboard.style.left = "-100%";
+            return;
+        }
+        overlay.style.display = "block";
+        dashboard.style.left = "0px";
+    };
 </script>
+
+<div class="tab" on:click={() => toggleMobileMenu()}>
+    <span>Menu</span>
+</div>
 
 <div class="dashboard">
     <h1>Diatonic Ruler 🎹</h1>
@@ -34,23 +50,67 @@
     {/each}
 </div>
 
+<div class="overlay" on:click={() => toggleMobileMenu(true)} />
+
 <style>
-    @media (max-width: 600px) {
-        .dashboard {
-            display: none;
-        }
+    .dashboard {
+        z-index: 3;
+        height: 100%;
+        width: 70%;
+        max-width: 18rem;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        background: #fff;
+        transition: 0.3s;
+        padding: 1.5rem 1.25rem;
     }
 
-    .dashboard {
+    .overlay {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        max-width: 20rem;
-        padding: 1.5rem 1.25rem;
-        font-size: 1rem;
-        line-height: 1.25;
-        border: 1px solid #c4befd;
-        border-radius: 10px;
-        margin: 1rem 2rem;
-        box-shadow: 0 2px 4px rgba(63, 56, 125, 20%);
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    .tab {
+        position: absolute;
+        top: 25%;
+        left: -4.25rem;
+        border: 1px solid #3f387d;
+        background: #3f387d;
+        padding: 0.4rem 3.5rem;
+        transform: rotate(90deg);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(63, 56, 125, 20%);
+        z-index: 3;
+    }
+
+    .tab span {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 1.15rem;
+        color: #fff;
+    }
+
+    @media (min-width: 600px) {
+        .dashboard {
+            width: 100%;
+            max-width: 20rem;
+            font-size: 1rem;
+            line-height: 1.25;
+            border: 1px solid #c4befd;
+            border-radius: 10px;
+            margin: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(63, 56, 125, 20%);
+        }
     }
 
     h1 {
