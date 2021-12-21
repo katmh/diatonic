@@ -6,8 +6,6 @@
     import itemsInFractionalHeight from "../utils/itemsInFractionalHeight.js";
 
     const interactable = interact(`#window`);
-    $: numRulers = Object.keys($rulers).length;
-    $: windowWidth = numRulers * 110 + (numRulers - 1) * 10 + 40;
 
     const moveWindow = (dy, windowElement) => {
         windowPosition.update((position) => position + dy / itemHeight);
@@ -45,20 +43,19 @@
     });
 </script>
 
-<div
-    id="window"
-    style="--item-height: {itemHeight}px; --window-width: {windowWidth}px;"
-/>
+<div id="window" style="--item-height: {itemHeight}px" />
 
 <style>
     #window {
-        border: 2px solid #bb9955;
+        border: 2px solid #9791cf;
         border-right-width: 20px;
         border-left-width: 20px;
+        border-radius: 5px;
         height: var(--item-height);
-        width: var(--window-width);
+        width: calc(100% + 20px);
         position: absolute;
         z-index: 1;
-        background: rgba(240, 220, 150, 0.3);
+        background: rgba(200, 200, 250, 0.25);
+        transition: 0.05s;
     }
 </style>

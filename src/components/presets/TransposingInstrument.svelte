@@ -1,12 +1,9 @@
-<p>
-    <b>Transposing instrument</b> shows corresponding pitches between concert and
-    written pitch.
+<p class="description">
+    See the mappings between written and concert pitches for transposing
+    instruments.
 </p>
 
 <p>
-    For a transposing instrument in x, align written pitch x [right ruler] to
-    concert pitch C [left ruler]. Use the cursor to locate other corresponding
-    pitches.
+    For an instrument in E♭, for example, align concert pitch (right) E♭ with
+    written pitch (left) <span class="inline_highlight">C</span>.
 </p>
-
-<p>instrument in x concert pitch [at cursor] j written pitch [at cursor] k</p>

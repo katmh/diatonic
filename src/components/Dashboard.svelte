@@ -34,11 +34,10 @@
     <div class="intro">
         <h1>Diatonic Ruler 🎹</h1>
         <p>
-            The diatonic ruler expands on <a
-                href="https://musictheoryexamplesbywomen.com/theorists/sarah-ann-glover-1786-1867/"
-                >Sarah Anna Glover</a
-            >’s Norwich sol-fa system. To get started, select a preset, or
-            explore by shifting the rulers up and down.
+            This website displays interactive <i>diatonic rulers</i> to let you
+            explore relationships between pitch, scale degrees and positions,
+            intervals, and more. To get started, select a preset.
+            <a href="">Learn more</a>
         </p>
     </div>
 

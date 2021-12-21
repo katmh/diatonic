@@ -12,7 +12,7 @@ export default [
         component: Interval,
     },
     {
-        name: "transposition",
+        name: "transposing_instrument",
         label: "Transposing instrument",
         rulers: ["pitch", "pitch"],
         component: TransposingInstrument,

@@ -1,7 +1,7 @@
 <script lang="ts">
     import interact from "interactjs";
     import { afterUpdate } from "svelte";
-    import { rulers } from "../stores.js";
+    import { rulers, selectedPreset } from "../stores.js";
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import UpDownButton from "./UpDownButton.svelte";
@@ -102,6 +102,9 @@
         if (type === "position" && parseInt(item)) {
             classes.push("highlighted_diatonic");
         }
+        if ($selectedPreset === "transposing_instrument" && item === "C") {
+            classes.push("highlighted_written_C");
+        }
         return classes.join(" ");
     };
 </script>
@@ -124,15 +127,18 @@
 
 <style>
     .highlighted_diatonic,
-    .highlighted_P1 {
+    .highlighted_P1,
+    .highlighted_written_C {
         background: #615e7d;
     }
     .highlighted_diatonic .label,
-    .highlighted_P1 .label {
+    .highlighted_P1 .label,
+    .highlighted_written_C .label {
         background: #615e7d;
         color: #fefefe;
     }
     .highlighted_diatonic .mark {
+        /* so there are borders between consecutive diatonic items */
         border-color: white;
     }
 
