@@ -155,6 +155,7 @@
         margin: 0 5px;
         background: #fefefe;
         box-shadow: 0 2px 8px rgba(63, 56, 125, 20%);
+        transition: 0.05s;
     }
 
     .item {

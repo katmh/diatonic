@@ -3,11 +3,12 @@
 </script>
 
 <div class="preset_info">
+    <h2>{preset.label}</h2>
     <svelte:component this={preset.component} />
 </div>
 
 <style>
     .preset_info {
-        margin-top: 1.5rem;
+        margin-top: 1.25rem;
     }
 </style>

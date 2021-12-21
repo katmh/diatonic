@@ -31,7 +31,7 @@ export default [
     },
     {
         name: "key",
-        label: "Key (Key signature and tonic)",
+        label: "Key (key signature + tonic)",
         rulers: ["pitch", "position", "degree"],
         component: Key
     },

@@ -21,8 +21,8 @@
 <style>
     .button_container {
         position: absolute;
-        width: calc(100% + 4px);
-        margin-left: -2px; /* so box shadow of ruler doesn't peek through */
+        width: calc(100% + 20px);
+        margin-left: -10px; /* so box shadow of ruler doesn't peek through */
         z-index: 1;
         padding: 1rem 0 2.15rem;
         border: none;

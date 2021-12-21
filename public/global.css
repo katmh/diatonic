@@ -42,7 +42,35 @@ a:visited {
 }
 
 .dashboard p {
-    margin: 1.15rem 0;
-    line-height: 1.55;
+    font-size: 0.95rem;
+    margin: 0.75rem 0;
+    line-height: 1.4;
     color: #222;
+}
+
+.dashboard h2 {
+    text-transform: uppercase;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.dashboard h2:after {
+    position: absolute;
+    content: "";
+    width: 200%;
+    border-bottom: 1px solid #ccc;
+    margin-left: 0.75rem;
+    top: 50%;
+}
+
+.preset_info .description {
+    background: #eee;
+    padding: 0.65rem 0.75rem;
+    border-radius: 5px;
+    color: #111;
+}
+
+.preset_info li {
+    margin: 0.25rem 0 0.25rem 1.75rem;
 }

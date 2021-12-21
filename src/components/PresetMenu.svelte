@@ -7,25 +7,24 @@
         presets[presets.findIndex((item) => item.name === $selectedPreset)];
 </script>
 
-<h2>Presets</h2>
-
-{#each presets as preset}
-    <input
-        type="radio"
-        name="preset"
-        id={preset.name}
-        value={preset.name}
-        bind:group={$selectedPreset}
-        on:change={() => updatePreset(presetObject)}
-    />
-    <label for={preset.name}>{preset.label}</label>
-{/each}
+<div class="preset_menu">
+    <h2>Presets</h2>
+    {#each presets as preset}
+        <input
+            type="radio"
+            name="preset"
+            id={preset.name}
+            value={preset.name}
+            bind:group={$selectedPreset}
+            on:change={() => updatePreset(presetObject)}
+        />
+        <label for={preset.name}>{preset.label}</label>
+    {/each}
+</div>
 
 <style>
-    h2 {
-        text-transform: uppercase;
-        font-size: 1.1rem;
-        margin: 2rem 0 0.5rem;
+    .preset_menu {
+        margin-top: 1.25rem;
     }
 
     input[type="radio"] {
@@ -34,11 +33,13 @@
 
     label {
         display: block;
-        padding: 0.3rem 0.75rem;
+        padding: 0.4rem 0.75rem 0.3rem;
         margin: 0.15rem 0;
         transition: 0.1s;
         cursor: pointer;
         border-radius: 5px;
+        line-height: 1;
+        font-size: 0.95rem;
     }
 
     label:hover {

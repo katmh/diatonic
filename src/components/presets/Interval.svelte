@@ -30,16 +30,26 @@
     };
 </script>
 
-<p>
-    <b>Interval</b> measures the distance between any pair of pitches, from the lower
-    pitch upward.
-</p>
+<p class="description">Measure the distance between any pair of pitches.</p>
 
 <p>
-    Setup: We have pitch and interval rulers. Align interval P1 to the lower
-    pitch you want, then use the cursor to find all intervals from there.
+    Align interval <span class="P1_highlight">P1</span> on the interval ruler (right)
+    to the desired lower pitch in the pitch ruler (left). Use the cursor to find
+    all intervals from that lower pitch.
 </p>
 
-<p>Lower pitch: {lowerPitch}</p>
-<p>Higher pitch: {higherPitch}</p>
-<p>Interval: {interval}</p>
+<ul>
+    <li>Lower pitch: {lowerPitch}</li>
+    <li>Higher pitch: {higherPitch}</li>
+    <li>Interval: {interval}</li>
+</ul>
+
+<style>
+    .P1_highlight {
+        background: #615e7d;
+        color: #fefefe;
+        padding: 1px 5px;
+        border-radius: 2px;
+        letter-spacing: 1px;
+    }
+</style>

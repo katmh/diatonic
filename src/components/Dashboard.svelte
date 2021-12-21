@@ -31,25 +31,22 @@
 </div>
 
 <div class="dashboard">
-    <h1>Diatonic Ruler 🎹</h1>
-
-    <p>
-        The diatonic ruler expands on <a
-            href="https://musictheoryexamplesbywomen.com/theorists/sarah-ann-glover-1786-1867/"
-            >Sarah Anna Glover</a
-        >’s Norwich Sol-Fa System. To get started, select a preset, or explore
-        by shifting the rulers up and down.
-    </p>
+    <div class="intro">
+        <h1>Diatonic Ruler 🎹</h1>
+        <p>
+            The diatonic ruler expands on <a
+                href="https://musictheoryexamplesbywomen.com/theorists/sarah-ann-glover-1786-1867/"
+                >Sarah Anna Glover</a
+            >’s Norwich sol-fa system. To get started, select a preset, or
+            explore by shifting the rulers up and down.
+        </p>
+    </div>
 
     <PresetMenu />
 
     {#if presetObject}
         <PresetInfo preset={presetObject} />
     {/if}
-
-    {#each $inWindow as item}
-        <p>{item}</p>
-    {/each}
 </div>
 
 <div class="overlay" on:click={() => toggleMobileMenu(true)} />
