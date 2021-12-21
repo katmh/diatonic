@@ -63,6 +63,7 @@
         transition: 0.3s;
         padding: 1.5rem 1.25rem;
         overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     .overlay {
