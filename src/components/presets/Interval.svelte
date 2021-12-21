@@ -33,7 +33,7 @@
 <p class="description">Measure the distances between any pair of pitches.</p>
 
 <p>
-    Align interval <span class="inline_highlight">P1</span> on the interval
+    Align interval <span class="inline_highlight">P1</span> in the interval
     ruler (right) to the desired lower pitch in the pitch ruler (left). Use the
     <span class="inline_cursor">cursor</span> to find all intervals from that lower
     pitch.
