@@ -3,6 +3,7 @@ import { writable, derived } from 'svelte/store';
 export const selectedPreset = writable("interval");
 
 export const rulers = writable({})
+export const rulerIDs = writable([]); // ruler IDs in order from left to right
 
 export const windowPosition = writable(0);
 

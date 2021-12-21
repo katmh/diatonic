@@ -1,7 +1,7 @@
 <script lang="ts">
     import interact from "interactjs";
     import { afterUpdate } from "svelte";
-    import { rulers, selectedPreset } from "../stores.js";
+    import { rulers, rulerIDs, selectedPreset } from "../stores.js";
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import UpDownButton from "./UpDownButton.svelte";
@@ -102,7 +102,11 @@
         if (type === "position" && parseInt(item)) {
             classes.push("highlighted_diatonic");
         }
-        if ($selectedPreset === "transposing_instrument" && item === "C") {
+        if (
+            $selectedPreset === "transposing_instrument" &&
+            id === $rulerIDs[0] &&
+            item === "C"
+        ) {
             classes.push("highlighted_written_C");
         }
         return classes.join(" ");

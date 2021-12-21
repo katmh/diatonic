@@ -4,6 +4,6 @@
 </p>
 
 <p>
-    For an instrument in E♭, for example, align concert pitch (right) E♭ with
+    For an instrument in B♭, for example, align concert pitch (right) B♭ with
     written pitch (left) <span class="inline_highlight">C</span>.
 </p>
