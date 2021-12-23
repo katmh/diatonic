@@ -8,7 +8,7 @@
         if ($inWindow.length !== 0) {
             higherPitch = $inWindow[0][1];
             interval = $inWindow[1][1];
-            lowerPitch = getLowerPitch();
+            lowerPitch = getLowerPitch() || "N/A"; // will be undefined if interval is undefined, i.e. cursor is not on interval ruler
         }
     }
 

@@ -1,7 +1,12 @@
 <script lang="ts">
     import interact from "interactjs";
     import { afterUpdate } from "svelte";
-    import { rulers, rulerIDs, selectedPreset } from "../stores.js";
+    import {
+        rulers,
+        rulerIDs,
+        selectedPreset,
+        windowPosition,
+    } from "../stores.js";
     import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import UpDownButton from "./UpDownButton.svelte";
@@ -24,6 +29,30 @@
     });
 
     const moveRuler = (dy: number, rulerElement: HTMLElement) => {
+        /**
+         * prevent user from moving ruler beyond window
+         * cannot move ruler position down past windowPosition
+         * cannot move ruler position up past (# items + current ruler position)
+         */
+        if ($windowPosition === $rulers[id].position && dy > 0) {
+            rulerComponent.classList.add("resist_pull_down");
+            setTimeout(() => {
+                rulerComponent.classList.remove("resist_pull_down");
+            }, 50);
+            return;
+        }
+        if (
+            $windowPosition ===
+                $rulers[id].items.length + $rulers[id].position - 1 &&
+            dy < 0
+        ) {
+            rulerComponent.classList.add("resist_pull_up");
+            setTimeout(() => {
+                rulerComponent.classList.remove("resist_pull_up");
+            }, 50);
+            return;
+        }
+
         // update `position` property of ruler in store
         rulers.update((rulers) => ({
             ...rulers,

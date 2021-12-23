@@ -97,3 +97,33 @@ a:visited {
     background: #eee;
     border-radius: 2px;
 }
+
+.resist_pull_down {
+    animation: resist_pull_down 0.2s ease-out infinite;
+}
+.resist_pull_up {
+    animation: resist_pull_up 0.2s ease-out infinite;
+}
+
+@keyframes resist_pull_down {
+    0% {
+        margin-top: 0;
+    }
+    50% {
+        margin-top: 4px;
+    }
+    100% {
+        margin-top: 0;
+    }
+}
+@keyframes resist_pull_up {
+    0% {
+        margin-top: 0;
+    }
+    50% {
+        margin-top: -4px;
+    }
+    100% {
+        margin-top: 0;
+    }
+}

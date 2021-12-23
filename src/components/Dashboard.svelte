@@ -54,7 +54,7 @@
     .dashboard {
         z-index: 3;
         height: 100%;
-        width: 70%;
+        width: 80%;
         max-width: 18rem;
         position: absolute;
         top: 0;
