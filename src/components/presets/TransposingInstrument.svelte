@@ -1,9 +1,37 @@
+<script lang="ts">
+    import { inWindow, rulers, rulerIDs, windowPosition } from "../../stores";
+
+    let written: string, concert: string, transposition: string;
+    $: {
+        [written, concert] = $inWindow.map((tup) => tup[1]);
+        transposition = getTransposition();
+    }
+
+    const getTransposition = () => {
+        // find diff between written C and window
+        // apply that diff to concert pitch
+        const writtenRulerItems = $rulers[$rulerIDs[0]].items;
+        const diff = writtenRulerItems.indexOf("C") - $windowPosition;
+        const concertRulerItems = $rulers[$rulerIDs[1]].items;
+        const concertIndex = concertRulerItems.indexOf($inWindow[1][1]);
+        return concertRulerItems[concertIndex + diff];
+    };
+</script>
+
 <p class="description">
     See the mappings between written and concert pitches for transposing
     instruments.
 </p>
 
 <p>
-    For an instrument in B♭, for example, align concert pitch (right) B♭ with
-    written pitch (left) <span class="inline_highlight">C</span>.
+    For an instrument in B♭, for example, align B♭ in the right ruler (concert
+    pitch) with <span class="inline_highlight">C</span> in the left ruler
+    (written pitch). Use the
+    <span class="inline_cursor">cursor</span> to see corresponding notes.
 </p>
+
+<ul>
+    <li>Instrument in <span class="dynamic">{transposition}</span></li>
+    <li>Written <span class="dynamic">{written}</span></li>
+    <li>Concert <span class="dynamic">{concert}</span></li>
+</ul>
