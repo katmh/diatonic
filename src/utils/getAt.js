@@ -1,4 +1,4 @@
-const getAt = (arr: any[], i: number) => {
+const getAt = (arr, i) => {
     if (i >= 0 && i < arr.length) {
         return arr[i];
     }
@@ -7,6 +7,6 @@ const getAt = (arr: any[], i: number) => {
     }
     // i < 0
     return arr[arr.length - (-i % arr.length)];
-}
+};
 
 export default getAt;
