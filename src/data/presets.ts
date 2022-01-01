@@ -33,6 +33,6 @@ export default [
         name: "key",
         label: "Key",
         rulers: ["pitch", "position", "degree"],
-        component: Key
+        component: Key,
     },
-]
+];

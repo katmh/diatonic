@@ -8,7 +8,7 @@ const generateID = () => {
     }
     IDs.add(ID);
     return ID.toString();
-}
+};
 
 const generateCode = (len: number) => {
     let code = [];
@@ -18,6 +18,6 @@ const generateCode = (len: number) => {
         code.push(alphabet[randNum]);
     }
     return code.join("");
-}
+};
 
 export default generateID;
