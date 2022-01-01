@@ -1,4 +1,4 @@
-const number = [
+let number = [
     "7",
     "♯6/♭7",
     "6",
@@ -12,20 +12,22 @@ const number = [
     "♯1/♭2",
     "1",
 ];
+number = number.concat(number);
 
-const degree = number.map((item) => {
-    const openTag = "<span class='caret'>"
-    const closeTag = "</span>"
-    const split = item.split("/")
+let degree = number.map((item) => {
+    const openTag = "<span class='caret'>";
+    const closeTag = "</span>";
+    const split = item.split("/");
     if (split.length === 1) {
         return openTag + item + closeTag;
     }
-    const firstNum = split[0].slice(1)
-    const secondNum = split[1].slice(1)
-    return `♯${openTag}${firstNum}${closeTag}/♭${openTag}${secondNum}${closeTag}`
-})
+    const firstNum = split[0].slice(1);
+    const secondNum = split[1].slice(1);
+    return `♯${openTag}${firstNum}${closeTag}/♭${openTag}${secondNum}${closeTag}`;
+});
+degree = degree.concat(degree);
 
-const position = [
+let position = [
     "7",
     "♯6/♭7",
     "6",
@@ -39,8 +41,9 @@ const position = [
     "♯1/♭2",
     "1",
 ];
+position = position.concat(position);
 
-const pitch = [
+let pitch = [
     "B",
     "A♯/B♭",
     "A",
@@ -54,6 +57,7 @@ const pitch = [
     "C♯/D♭",
     "C",
 ];
+pitch = pitch.concat(pitch);
 
 const interval = [
     "P15",
@@ -80,7 +84,7 @@ const interval = [
     "A2/m3",
     "M2",
     "A1/m2",
-    "P1"
-]
+    "P1",
+];
 
 export default { number, degree, position, pitch, interval };

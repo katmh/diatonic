@@ -7,7 +7,6 @@
         selectedPreset,
         windowPosition,
     } from "../stores.js";
-    import allItems from "../data/items.js";
     import itemHeight from "../data/itemHeight.js";
     import UpDownButton from "./UpDownButton.svelte";
 
@@ -75,36 +74,6 @@
         );
 
     afterUpdate(async () => {
-        // make ruler take up full height of viewport
-        if ($rulers[id].items.length != 0) {
-            return;
-        }
-        if (type === "interval") {
-            rulers.update((rulers) => ({
-                ...rulers,
-                [id]: {
-                    ...rulers[id],
-                    items: allItems.interval,
-                },
-            }));
-        } else {
-            let remainingHeight = window.innerHeight;
-            while (remainingHeight > 0) {
-                const currentItems = $rulers[id].items;
-                const nextItem =
-                    allItems[type][currentItems.length % allItems[type].length];
-                const itemsPlusNextItem = currentItems.concat([nextItem]);
-                rulers.update((rulers) => ({
-                    ...rulers,
-                    [id]: {
-                        ...rulers[id],
-                        items: itemsPlusNextItem,
-                    },
-                }));
-                remainingHeight -= itemHeight;
-            }
-        }
-
         const interactable = interact(`#${id}`);
         interactable.draggable({
             lockAxis: "y",
