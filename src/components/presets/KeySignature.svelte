@@ -1,10 +1,22 @@
 <script lang="ts">
-    import getAt from "../../utils/getAt.js";
-    import { rulers, rulerIDs } from "../../stores";
+    import Vex from "vexflow";
+    import { onMount } from "svelte";
     import {
         pitchLabelToMajorKey,
         majorKeyStartNotes,
     } from "../../data/keySignatures";
+    import getAt from "../../utils/getAt.js";
+    import { rulers, rulerIDs } from "../../stores";
+
+    let notationContainer: HTMLElement;
+    let VF, renderer, context;
+    onMount(() => {
+        notationContainer = document.querySelector("#notation");
+        VF = Vex.Flow;
+        renderer = new VF.Renderer(notationContainer, VF.Renderer.Backends.SVG);
+        renderer.resize(200, 140);
+        context = renderer.getContext();
+    });
 
     let keySignatures: {
         notes: string;
@@ -40,6 +52,19 @@
         }
 
         console.log(keySignatures);
+
+        if (notationContainer) {
+            context.clear();
+            const treble = new VF.Stave(0, 0, 200, { space_above_staff_ln: 2 }); // x, y, width
+            const keyToUse = keySignatures[0].major
+                .replace("♯", "#")
+                .replace("♭", "b");
+            treble.addClef("treble").addKeySignature(keyToUse);
+            const bass = new VF.Stave(0, 90, 200, { space_above_staff_ln: 0 });
+            bass.addClef("bass").addKeySignature(keyToUse);
+            treble.setContext(context).draw();
+            bass.setContext(context).draw();
+        }
     }
 </script>
 
@@ -54,4 +79,17 @@
     <span class="inline_highlight">numbers without accidentals</span>.
 </p>
 
-<p />
+<div id="notation" />
+
+<p>
+    Key signature corresponds to the keys <span class="dynamic"
+        >{keySignatures[0].major} major</span
+    >
+    or <span class="dynamic">{keySignatures[0].minor} minor</span>
+</p>
+
+<style>
+    #notation :global(svg) {
+        width: 100%;
+    }
+</style>
