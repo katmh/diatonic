@@ -3,17 +3,18 @@
 
     let written: string, concert: string, transposition: string;
     $: {
-        [written, concert] = $inWindow.map((tup) => tup[1]);
-        transposition = getTransposition();
+        if ($inWindow.length !== 0) {
+            [written, concert] = $inWindow.map((tup) => tup[1]);
+            transposition = getTransposition() || "N/A";
+        }
     }
 
     const getTransposition = () => {
         // find diff between written C and window
         // apply that diff to concert pitch
-        const writtenRulerItems = $rulers[$rulerIDs[0]].items;
-        const diff = writtenRulerItems.indexOf("C") - $windowPosition;
+        const diff = 11 - $windowPosition; // 11 is index of one of the Cs
         const concertRulerItems = $rulers[$rulerIDs[1]].items;
-        const concertIndex = concertRulerItems.indexOf($inWindow[1][1]);
+        const concertIndex = concertRulerItems.indexOf(concert);
         return concertRulerItems[concertIndex + diff];
     };
 </script>
