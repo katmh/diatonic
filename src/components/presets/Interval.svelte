@@ -1,5 +1,6 @@
 <script lang="ts">
     import { inWindow, rulers, rulerIDs, windowPosition } from "../../stores";
+    import items from "../../data/items";
 
     let lowerPitch: string, higherPitch: string, interval: string;
     $: {
@@ -12,7 +13,7 @@
     const getLowerPitch = () => {
         // find diff between P1 and current interval
         // apply that diff to current pitch
-        const diff = 24 - $windowPosition; // 24 is index of "P1"
+        const diff = 24 - items["interval"].indexOf(interval); // 24 is index of "P1"
         const pitchRulerItems = $rulers[$rulerIDs[0]].items;
         const pitchIndex = pitchRulerItems.indexOf(higherPitch);
         return pitchRulerItems[pitchIndex + diff];
