@@ -91,7 +91,7 @@ const Ruler = (props: RulerProps) => {
     y: ITEM_HEIGHT,
   });
 
-  const moveRuler = (e, knownOffset?: number): void => {
+  const moveRuler = (e: any, knownOffset?: number): void => {
     const indexOfCurrentZerothItem = reverseMapFromRulerType[props.type].get(
       props.itemAtZero
     );
@@ -104,7 +104,7 @@ const Ruler = (props: RulerProps) => {
     const newItem = getAt(items, indexOfCurrentZerothItem - offset);
     props.updateRulers(props.location, newItem);
   };
-  const shift = (e, down = false): void => moveRuler(e, down ? 1 : -1);
+  const shift = (e: any, down = false): void => moveRuler(e, down ? 1 : -1);
 
   return (
     <Reactable
