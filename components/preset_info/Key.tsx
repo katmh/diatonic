@@ -1,5 +1,6 @@
 interface KeyProps {
   zerothItems: string[];
+  cursorPosition: number;
 }
 
 const Key = (props: KeyProps) => {
