@@ -27,10 +27,10 @@ interface RulerBaseProps {
   location: number;
   shift: (e: React.SyntheticEvent, down?: boolean) => void;
   getRef: React.Ref<HTMLDivElement>;
+  intervalRulerPosition: number;
 }
 
 const RulerBase = (props: RulerBaseProps) => {
-  const [intervalRulerPosition, updateIntervalRulerPosition] = useState(0);
   return (
     <div className="ruler_container no_select">
       <UpDownButtons directionIsUp handleClick={props.shift} />
@@ -69,6 +69,7 @@ const RulerBase = (props: RulerBaseProps) => {
           background: #fefefe;
           box-shadow: 0 2px 8px rgba(63, 56, 125, 20%);
           transition: 0.05s;
+          transform: translateY(${props.intervalRulerPosition}px);
         }
         .no_select {
           -webkit-touch-callout: none;
@@ -85,6 +86,8 @@ const RulerBase = (props: RulerBaseProps) => {
 const Reactable = reactable(RulerBase);
 
 const Ruler = (props: RulerProps) => {
+  const [intervalRulerPosition, updateIntervalRulerPosition] = useState(0);
+
   const ITEM_HEIGHT = 36;
   const gridTarget = interact.snappers.grid({
     x: 1,
@@ -92,14 +95,19 @@ const Ruler = (props: RulerProps) => {
   });
 
   const moveRuler = (e: any, knownOffset?: number): void => {
+    if (props.type === "interval") {
+      updateIntervalRulerPosition((current) => current + e.dy);
+    }
+
+    const items = labelsFromRulerType[props.type];
+
     const indexOfCurrentZerothItem = reverseMapFromRulerType[props.type].get(
       props.itemAtZero
     );
     if (typeof indexOfCurrentZerothItem !== "number") {
       throw "Cannot find the index of the ruler's current zeroth item";
     }
-    const items = labelsFromRulerType[props.type];
-
+    
     const offset = knownOffset ?? e.dy / ITEM_HEIGHT;
     const newItem = getAt(items, indexOfCurrentZerothItem - offset);
     props.updateRulers(props.location, newItem);
@@ -125,6 +133,7 @@ const Ruler = (props: RulerProps) => {
         ],
       }}
       onDragMove={(e) => moveRuler(e)}
+      intervalRulerPosition={intervalRulerPosition}
     />
   );
 };
@@ -210,13 +219,13 @@ const renderRulerItems = (
     );
   };
 
-  /*if (type === "interval") {
+  if (type === "interval") {
     return labels.map((label, i) => {
       const isIntervalP1 = label === "P1";
       const classes = `item${isIntervalP1 ? " highlight_P1" : ""}`;
       return <Item key={i} label={label} classes={classes} />;
     });
-  }*/
+  }
 
   return arrOfNumSlotsLength.map((_, i) => {
     const label = getItemGivenZerothItem(i, seedItem, labels, reverseMap);
