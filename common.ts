@@ -161,3 +161,19 @@ export const getItemsAtOffset = (
   });
   return underCursor;
 };
+
+// https://en.wikipedia.org/wiki/Relative_key#List
+export const minorKeyFromMajor: Map<string, string> = new Map([
+  ["B", "G♯/A♭"],
+  ["A♯/B♭", "G"],
+  ["A", "F♯"],
+  ["G♯/A♭", "F"],
+  ["G", "E"],
+  ["F♯/G♭", "D♯/E♭"],
+  ["F", "D"],
+  ["E", "C♯"],
+  ["D♯/E♭", "C"],
+  ["D", "B"],
+  ["C♯/D♭", "A♯/B♭"],
+  ["C", "A"],
+]);
