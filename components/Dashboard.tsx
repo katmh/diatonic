@@ -17,7 +17,6 @@ interface DashboardProps {
 const Dashboard = (props: DashboardProps) => {
   const [mobileIsOpen, updateMobileIsOpen] = useState(false);
   const toggleMobileMenu = () => updateMobileIsOpen(!mobileIsOpen);
-  console.log(props.zerothItems);
   return (
     <>
       <div className={`dashboard ${mobileIsOpen ? "dashboard_open" : ""}`}>
